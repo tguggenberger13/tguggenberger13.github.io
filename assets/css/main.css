@@ -21,7 +21,7 @@ section, summary, time, mark, audio, video {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	font-size: 100%;
+	font-size: 90%;
 	font: inherit;
 	vertical-align: baseline;}
 
@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 	display: block;}
 
 body {
+	zoom: 0.9;
 	line-height: 1;
 }
 
@@ -99,7 +100,7 @@ input, select, textarea {
 	}
 
 	body {
-		background: #ffffff;
+		background: #e5e5e5;
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
@@ -151,7 +152,7 @@ input, select, textarea {
 
 		a:hover {
 			border-bottom-color: transparent;
-			color: #f2849e !important;
+			color: #81D8D0 !important; 
 		}
 
 	strong, b {
@@ -277,6 +278,7 @@ input, select, textarea {
 	}
 
 	pre {
+		width: 75%;
 		-webkit-overflow-scrolling: touch;
 		font-family: "Courier New", monospace;
 		font-size: 0.9em;
@@ -1856,8 +1858,8 @@ input, select, textarea {
 			}
 
 			.icon.style2:hover {
-				color: #f2849e;
-				border-color: #f2849e;
+				color: #81D8D0;
+				border-color: #81D8D0;
 			}
 
 			.icon.style2:active {
@@ -2170,8 +2172,8 @@ input, select, textarea {
 		input[type="tel"]:focus,
 		select:focus,
 		textarea:focus {
-			border-bottom-color: #f2849e;
-			box-shadow: inset 0 -1px 0 0 #f2849e;
+			border-bottom-color: #81D8D0;
+			box-shadow: inset 0 -1px 0 0 #81D8D0;
 		}
 
 	select {
@@ -2275,8 +2277,8 @@ input, select, textarea {
 
 		input[type="checkbox"]:focus + label:before,
 		input[type="radio"]:focus + label:before {
-			border-color: #f2849e;
-			box-shadow: 0 0 0 1px #f2849e;
+			border-color: #81D8D0;
+			box-shadow: 0 0 0 1px #81D8D0;
 		}
 
 	input[type="checkbox"] + label:before {
@@ -2345,7 +2347,7 @@ input, select, textarea {
 		.image.fit {
 			display: block;
 			margin: 0 0 2em 0;
-			width: 100%;
+			width: 75%;
 		}
 
 			.image.fit img {
@@ -2494,8 +2496,8 @@ input, select, textarea {
 		input[type="button"]:hover,
 		button:hover,
 		.button:hover {
-			color: #f2849e !important;
-			box-shadow: inset 0 0 0 2px #f2849e;
+			color: #81D8D0 !important;
+			box-shadow: inset 0 0 0 2px #81D8D0;
 		}
 
 		input[type="submit"]:active,
@@ -2537,7 +2539,7 @@ input, select, textarea {
 			input[type="button"].primary:hover,
 			button.primary:hover,
 			.button.primary:hover {
-				background-color: #f2849e;
+				background-color: #81D8D0;
 			}
 
 			input[type="submit"].primary:active,
@@ -2706,27 +2708,27 @@ input, select, textarea {
 					}
 
 			.tiles article.style1 > .image:before {
-				background-color: #f2849e;
+				background-color: #66D3FA; 
 			}
 
 			.tiles article.style2 > .image:before {
-				background-color: #7ecaf6;
+				background-color: #62b6cb;
 			}
 
 			.tiles article.style3 > .image:before {
-				background-color: #7bd0c1;
+				background-color: #bee9e8; 
 			}
 
 			.tiles article.style4 > .image:before {
-				background-color: #c75b9b;
+				background-color: #cae9ff;
 			}
 
 			.tiles article.style5 > .image:before {
-				background-color: #ae85ca;
+				background-color: #5fa8d3; 
 			}
 
 			.tiles article.style6 > .image:before {
-				background-color: #8499e7;
+				background-color: #1b4965; 
 			}
 
 			body:not(.is-touch) .tiles article:hover > .image {
@@ -2928,7 +2930,7 @@ input, select, textarea {
 						}
 
 						#header nav ul li a[href="#menu"]:before {
-							background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline %7B stroke-width: 8px%3B stroke: %23f2849e%3B %7D%3C/style%3E%3Cline x1='0' y1='25' x2='100' y2='25' /%3E%3Cline x1='0' y1='50' x2='100' y2='50' /%3E%3Cline x1='0' y1='75' x2='100' y2='75' /%3E%3C/svg%3E");
+							background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline %7B stroke-width: 8px%3B stroke: %2381D8D0%3B %7D%3C/style%3E%3Cline x1='0' y1='25' x2='100' y2='25' /%3E%3Cline x1='0' y1='50' x2='100' y2='50' /%3E%3Cline x1='0' y1='75' x2='100' y2='75' /%3E%3C/svg%3E");
 							opacity: 0;
 						}
 
@@ -3078,7 +3080,7 @@ input, select, textarea {
 			}
 
 			#menu > .close:before {
-				background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline %7B stroke-width: 8px%3B stroke: %23f2849e%3B %7D%3C/style%3E%3Cline x1='15' y1='15' x2='85' y2='85' /%3E%3Cline x1='85' y1='15' x2='15' y2='85' /%3E%3C/svg%3E");
+				background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cstyle%3Eline %7B stroke-width: 8px%3B stroke: %2381D8D0%3B %7D%3C/style%3E%3Cline x1='15' y1='15' x2='85' y2='85' /%3E%3Cline x1='85' y1='15' x2='15' y2='85' /%3E%3C/svg%3E");
 				opacity: 0;
 			}
 
@@ -3310,7 +3312,11 @@ input, select, textarea {
 					}
 
 		}
-
+		
+		pre[class*="language-"] code {
+			font-size: 0.60rem;
+			line-height: 1.5;
+		}
 /* Wrapper */
 
 	#wrapper > * > .inner {
