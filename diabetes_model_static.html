@@ -1,0 +1,365 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Diabetes Screening Model</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/flag-svgrepo-com.svg" alt="" /></span><span class="title"></span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+				<nav id="menu">
+					<h2>Menu</h2>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="DigitalTwin.html">Digital Twins</a></li>
+						<li><a href="diabetes_model_static.html">Diabetes Screening</a></li>
+						<li><a href="pricetransparency.html">Hospital Price Transparency</a></li>
+						<li><a href="FHIRingestiondemo.html">FHIR</a></li>
+						<li><a href="CareDraw.html">CareDraw</a></li>
+						<li><a href="MedAdherence.html">Med Adherence</a></li>
+						<li><a href="ETLforNHL.html">ETL for NHL</a></li>
+						<li><a href="ninemile.html">NineMileUrbanFarm</a></li>
+						<li><a href="AboutMe.html">About Me</a></li>
+					</ul>
+				</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Diabetes Screening Model</h1>
+							<!-- Text -->
+							<section>
+								<hr />
+								<h4>Overview</h4>
+								<p>Millions of individuals live with undiagnosed type 2 diabetes, accumulating years of damage that increases their risk of cardiovascular disease, kidney failure, nerve damage, and vision loss—complications that early detection could otherwise prevent or delay. Yet, the populations who would benefit most from early screening — like those in under-resourced communities, rural areas and developing nations — often lack the access, funding and infrastructure required for comprehensive diagnostic testing.</p>
+								<p>A lightweight, low-cost and noninvasive screening model may be beneficial in helping to address this disparity; by equipping and enabling frontline healthcare workers, community health programs and healthcare practitioners to rapidly screen patients, we may be able to extend the reach of diabetes detection efforts to population health groups that need it most.</p>
+								<p>What's captured here is, of course, not intended to be a diagnostic tool, but rather a scalable and high-volume ‘first filter’ to help stratify risk and guide downstream efforts such as referrals, education programs or follow-up testing. Consider this a 'minimum viable product' that establishes a conceptual framework for future iteration, development and research.</p>
+								<h4>Variables</h4>
+								<p>This model uses 9 easily obtained clinical characteristics and applies a decision tree algorithm to generate a risk classification of either 'Diabetic' or 'Normal'. These variables may be sourced from patient charts or during the intake process. As depicted further below, building out this algorithm programatically is easy and could be deployed in several capacities including Clinical Decision Support tools, integration with Electronic Health Record modules, business intelligence dashboards and data marts, or even just ad-hoc as a standlone application using patient sets. These variables were sourced and selected based on a study published <a href="https://pubmed.ncbi.nlm.nih.gov/30866905/">here</a>.</p>
+							</section>
+							<!-- Image -->
+							<section>
+								<div class="box alt">
+									<div class="row gtr-uniform">
+									<div class="col-12"><span class="image fit"><img src="images/Decision Tree of Diabetes Classifiers (1).png" alt="" />
+									</span></div>
+							</section>
+							<!-- Text -->
+								<section>
+									<h4>Functional Goals</h4>
+									<li><i>Improve clinical outcomes through earlier risk detection and intervention</i></li>
+									<li><i>Improve productivity of health care workers by way of resource reallocation - i.e. physician involvement in low-risk screening can be reduced or delegated</i></li>
+									<li><i>Reduce lab utilization by right-sizing frequency of blood glucose testing among certain low-risk patient cohorts</i></li>
+									<li><i>Improve accuracy and time to clinical diagnosis through broader screening</i></li>
+									<li><i>Drive greater patient involvement in their own health through earlier educational and lifestyle intervention</i></li>
+									<br>
+									<h4>Sample Python Code</h4>
+									<p>First, can define a resuable function that reads in a dictionary containing our 9 variables</p>
+									<pre><code class="language-python">
+def assess_diabetes_risk(patient_data):
+"""
+Assess diabetes risk based on patient characteristics
+
+Args:
+	patient_data (dict): Dictionary containing patient information with keys:
+		- age: int
+		- family_history_diabetes: bool
+		- bmi: float
+		- prefers_salty_food: bool
+		- physically_active: bool
+		- history_cvd_stroke: bool
+		- work_stress: str ('HIGH' or 'LOW/MODERATE')
+		- has_hypertension: bool
+		- sex: str ('MALE' or 'FEMALE')
+
+Returns:
+	str: 'NORMAL' or 'DIABETIC'
+"""
+
+age = patient_data['age']
+family_history_diabetes = patient_data['family_history_diabetes']
+bmi = patient_data['bmi']
+prefers_salty_food = patient_data['prefers_salty_food']
+physically_active = patient_data['physically_active']
+history_cvd_stroke = patient_data['history_cvd_stroke']
+work_stress = patient_data['work_stress']
+has_hypertension = patient_data['has_hypertension']
+sex = patient_data['sex']
+
+if age <= 49:
+	if family_history_diabetes:
+		if bmi <= 25:
+			return 'NORMAL'
+		else:  
+			return 'DIABETIC'
+	else:  
+		if bmi <= 25:
+			return 'NORMAL'
+		else:  
+			if prefers_salty_food:
+				if age <= 34:
+					return 'NORMAL'
+				else:  
+					if physically_active:
+						if history_cvd_stroke:
+							return 'DIABETIC'
+						else:  
+							return 'NORMAL'
+					else:  
+						return 'DIABETIC'
+			else:  
+				return 'NORMAL'
+
+else:  
+	if work_stress == 'HIGH':
+		if family_history_diabetes:
+			return 'DIABETIC'
+		else:  
+			if bmi <= 25:
+				return 'NORMAL'
+			else:  
+				return 'DIABETIC'
+	else:  
+		if bmi <= 25:
+			if prefers_salty_food:
+				if has_hypertension:
+					return 'DIABETIC'
+				else:  
+					if sex == 'MALE':
+						if history_cvd_stroke:
+							return 'DIABETIC'
+						else:  
+							return 'NORMAL'
+					else:  
+						return 'NORMAL'
+			else:  
+				return 'NORMAL'
+		else:  
+			if family_history_diabetes:
+				return 'DIABETIC'
+			else:  
+				if prefers_salty_food:
+					return 'DIABETIC'
+				else:  
+					return 'NORMAL'									
+									
+									</code></pre>
+									<br>
+									<p>Next, we can simply mock up some dummy data to test the function.</p>
+									<pre><code class="language-python">
+def create_demo_patients():
+"""
+Generate dummy records for testing
+"""
+patients = [
+{
+	'name': 'Babe Ruth',
+	'age': 53,
+	'family_history_diabetes': True,
+	'bmi': 31.5,
+	'prefers_salty_food': True,
+	'physically_active': False,
+	'history_cvd_stroke': False,
+	'work_stress': 'HIGH',
+	'has_hypertension': True,
+	'sex': 'MALE'
+},
+{
+	'name': 'Jackie Robinson',
+	'age': 42,
+	'family_history_diabetes': True,
+	'bmi': 27.8,
+	'prefers_salty_food': False,
+	'physically_active': True,
+	'history_cvd_stroke': False,
+	'work_stress': 'HIGH',
+	'has_hypertension': True,
+	'sex': 'MALE'
+},
+{
+	'name': 'Lou Gehrig',
+	'age': 37,
+	'family_history_diabetes': False,
+	'bmi': 26.2,
+	'prefers_salty_food': True,
+	'physically_active': True,
+	'history_cvd_stroke': False,
+	'work_stress': 'LOW/MODERATE',
+	'has_hypertension': False,
+	'sex': 'MALE'
+},
+{
+	'name': 'Ty Cobb',
+	'age': 61,
+	'family_history_diabetes': False,
+	'bmi': 24.1,
+	'prefers_salty_food': True,
+	'physically_active': False,
+	'history_cvd_stroke': True,
+	'work_stress': 'LOW/MODERATE',
+	'has_hypertension': True,
+	'sex': 'MALE'
+},
+{
+	'name': 'Satchel Paige',
+	'age': 59,
+	'family_history_diabetes': False,
+	'bmi': 22.8,
+	'prefers_salty_food': False,
+	'physically_active': True,
+	'history_cvd_stroke': False,
+	'work_stress': 'LOW/MODERATE',
+	'has_hypertension': False,
+	'sex': 'MALE'
+},
+{
+	'name': 'Mickey Mantle',
+	'age': 46,
+	'family_history_diabetes': False,
+	'bmi': 28.9,
+	'prefers_salty_food': True,
+	'physically_active': False,
+	'history_cvd_stroke': False,
+	'work_stress': 'HIGH',
+	'has_hypertension': False,
+	'sex': 'MALE'
+}
+]
+return patients
+
+								
+		
+									</code></pre>
+									<br>
+									<p>Now, we're ready to invoke the function using our test data from above.</p>
+									<pre><code class="language-python">
+def patient_assessment():
+
+import pandas as pd
+
+demo_patients = create_demo_patients()
+
+
+results = []
+for patient in demo_patients:
+	risk_assessment = assess_diabetes_risk(patient)
+	patient_summary = {
+		'Name': patient['name'],
+		'Age': patient['age'],
+		'BMI': patient['bmi'],
+		'Family_History': patient['family_history_diabetes'],
+		'High_Stress': patient['work_stress'] == 'HIGH',
+		'Physically_Active': patient['physically_active'],
+		'Risk_Assessment': risk_assessment
+	}
+	results.append(patient_summary)
+
+
+df = pd.DataFrame(results)
+
+print("=== DIABETES RISK ASSESSMENT ===\n")
+print(df.to_string(index=False))
+
+print(f"\n=== SUMMARY ===")
+print(f"Total patients assessed: {len(results)}")
+print(f"Patients flagged as DIABETIC risk: {sum(1 for r in results if r['Risk_Assessment'] == 'DIABETIC')}")
+print(f"Patients classified as NORMAL: {sum(1 for r in results if r['Risk_Assessment'] == 'NORMAL')}")
+
+return df
+
+# Invoke Function 
+if __name__ == "__main__":
+scored_df = patient_assessment()
+									</code></pre>
+									<section>
+										<div class="box alt">
+											<div class="row gtr-uniform">
+											<div class="col-12"><span class="image fit"><img src="images/diabetesfunction_output.png" alt="" />
+											</span></div>
+									</section>
+									<br>
+									<p>And, finally see the results as calculated by the screening algorithm. While there's nothing remarkable about this prototype in a vacuum, it's easy to extrapolate how this type of framework may eventually scale its way into clinical workflows. Imagine a swath of approved and governed models that sit behind-the-scenes, constantly conducting 'chart review' across the totality of the Electronic Health System patient population. Algorithms could very feasibly monitor, aggregate and evalute everything from labs, images and clinical notes to referral summaries, patient-reported outcomes and SDOH questionnaires. This level of augmentation could significantly increase physician capacity and patient outcomes.</p>
+						</div>
+					</div>
+
+				<!-- Footer -->
+				<!-- Footer -->
+				<footer id="footer">
+					<div class="inner">
+						<!-- <section>
+							<h2>Get in touch</h2>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field half">
+										<input type="text" name="name" id="name" placeholder="Name" />
+									</div>
+									<div class="field half">
+										<input type="email" name="email" id="email" placeholder="Email" />
+									</div>
+									<div class="field">
+										<textarea name="message" id="message" placeholder="Message"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send" class="primary" /></li>
+								</ul>
+							</form>
+						</section> -->
+						<section>
+							<h2>Follow</h2>
+							<ul class="icons">
+								<li><a href="https://github.com/tguggenberger13/tguggenberger13.github.io" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+								<li><a href="https://www.linkedin.com/in/tyler-guggenberger-b0840755/" class="icon brands style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+								<!-- <li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
+								<li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li> -->
+							</ul>
+						</section>
+						<ul class="copyright">
+							<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</div>
+				</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Medication Adherence</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/flag-svgrepo-com.svg" alt="" /></span><span class="title"></span>
+								</a>
+
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+
+						</div>
+					</header>
+
+				<!-- Menu -->
+				<nav id="menu">
+					<h2>Menu</h2>
+					<ul>
+						<li><a href="index.html">Home</a></li>
+						<li><a href="DigitalTwin.html">Digital Twins</a></li>
+						<li><a href="diabetes_model_static.html">Diabetes Screening</a></li>
+						<li><a href="pricetransparency.html">Hospital Price Transparency</a></li>
+						<li><a href="FHIRingestiondemo.html">FHIR</a></li>
+						<li><a href="CareDraw.html">CareDraw</a></li>
+						<li><a href="MedAdherence.html">Med Adherence</a></li>
+						<li><a href="ETLforNHL.html">ETL for NHL</a></li>
+						<li><a href="ninemile.html">NineMileUrbanFarm</a></li>
+						<li><a href="AboutMe.html">About Me</a></li>
+					</ul>
+				</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1>Medication Adherence Tracker</h1>
+							<!-- Text -->
+							<section>
+								<hr />
+								<!-- <p><i>All source code for this project can be found here.</i></p> -->
+								<h4>Overview</h4>
+								<p>Encompassed here is a python-based Medication Adherence Tracker that analyzes patient prescription data to identify which patients are overdue for medication refills. The program reads-in medication data from a .csv file, calculates when each medication should be refilled based on the fill date and days supply, and then generates an output report detailing compliance status, both at a patient and summary level.</p>
+								<h4>Value Proposition</h4>
+								<p>Poor medication adherence can be attributed to as many as <a href="https://www.heart.org/en/health-topics/consumer-healthcare/medication-
+									information/medication-adherence-taking-your-meds-as-directed">125,000 deaths annually
+									and an estimated $300 billion in annual healthcare expenditures.</a> However, advances in
+									technology have <a href="https://www.cdc.gov/mmwr/volumes/66/wr/mm6645a2.htm"> shown to be cost-effective tools </a> for improving medication adherence, which in turn can improve care outcomes and
+									reduce mortality, morbidity and hospital admissions (2). This python program seeks to augment or replace existing
+									adherence tracking processes to reduce errors and expedite calculations and clinical interventions.</p>
+								<h4>How it works</h4>
+								<p>This program is organized with three key files, that should all reside in common python working directory, and are
+									as follows: (1) an input .csv file that contains the raw medication data to be analyzed, (2) a main program
+									python file to process the .csv and generate an output report, and (3) a custom MedicationClass python file
+									that contains various methods on which the main program relies on.
+									For this program, the schema of the .csv file is enforced and must contain the following required fields: patient ID,
+									medication name, dosage, days supply and fill date. When this program initializes, it reads-in the input file and loops
+									over each unique patient-prescription row of data to calculate an expected refill date, days overdue (or days
+									remaining until non-compliance), and an overall compliance status. The output, then, is summarized in the printed
+									console output and a detail patient-level report is generated to the same python working directory
+									(compliance_report.txt). This program demonstrates object-oriented design by leveraging a Medication Class to
+									encapsulate various methods built for medication object construction, refill calculations and string representations.
+									The program also demonstrates data processing through the reading and writing of files, error handling through data
+									validation and exception violations, as well as unit testing to validate the accuracy and functionality of class
+									methods. Overall, because the code is modular, it could certainly be expanded in future iterations to handle more
+									robust use cases and requirements.</p>
+								<!--<h4>Applications</h4>
+								<p>This program has several potential applications. Healthcare providers may utilize it to rapidly screen and flag
+									patients in their care network that may require outreach or intervention. Additionally, pharmacies may seek to
+									leverage this tool for purposes of sending outreach calls, texts or emails to patients overdue for refills. And finally,
+									it’s also possible that health plans and insurance companies may utilize this tool for various quality measure
+									reporting requirements.</p> -->
+							<!-- Text -->
+								<section>
+									<h4>Medication Class</h4>
+									<p>Below, we define a resuable medication class to construct medication objects for processing by the main program.</p>
+									<pre><code class="language-python">
+
+from datetime import datetime, timedelta
+
+class Medication:
+""" class for medication object construction with refill-based compliance tracking """
+
+def __init__(self, name, dosage, days_supply, fill_date):
+	""" This method initializes our medication constructor """
+	# public attributes
+	self.name = name
+	self.dosage = dosage
+	self.days_supply = days_supply
+	self.fill_date = datetime.strptime(fill_date, "%Y-%m-%d")
+	self.expected_refill_date = self.fill_date + timedelta(days=days_supply)
+	
+	# private attribute
+	self._days_overdue = 0
+
+def __str__(self):
+	""" This method provides a string representation of medication """
+	status = "overdue" if self._days_overdue > 0 else "ok"
+	return f"{self.name} {self.dosage} - {status} ({self._days_overdue:+d} days)"
+
+def __len__(self):
+	""" This magic method returns medication days supply """
+	return self.days_supply
+
+#public methods
+def calculate_days_overdue(self, current_date):
+	""" This public method calculates days overdue using expected refill date against current date """
+	days_diff = (current_date - self.expected_refill_date).days
+	self._days_overdue = days_diff
+	return self._days_overdue
+
+def is_overdue(self):
+	""" This public method checks if a medication refill is overdue """
+	return self._days_overdue > 0
+
+#private method
+def _get_refill_date_string(self):
+	""" This private method formats expected refill date as a string """
+	return self.expected_refill_date.strftime("%Y-%m-%d")
+											
+										</code></pre>
+									<br>
+									<h4>Main Program</h4>
+									<p>Next, we can execute the main program to process inbound file(s) and generate compliance report(s).</p>
+									<pre><code class="language-python">
+
+""" This is the main program for the medication adherence tracker, which takes a CSV file as input 
+and generates a detailed compliance report as output. """
+
+from MedicationClass import Medication 
+import csv
+from datetime import datetime
+
+
+def calculate_compliance_rate(medications_list):
+	""" This function calculates compliance rate, returning a percentage of meds that are not overdue """
+	total = len(medications_list)
+	
+	if total == 0:
+		return 0.0
+	
+	compliant = sum(1 for med in medications_list if not med.is_overdue())
+	return (compliant / total) * 100
+
+
+def read_medications(filename, current_date):
+	""" This function reads in data from CSV file and returns a dictionary of patient medications and a list of all medications. """
+	
+	patient_info = {} 
+	medications = []
+	unique_patients = set()
+	
+	try:
+		
+		with open(filename, 'r') as file:
+			csv_reader = csv.DictReader(file)
+			
+			for row in csv_reader:
+				patient_id = row['patient_id']
+				med_name = row['medication_name']
+				dosage = row['dosage']
+				days_supply = int(row['days_supply'])
+				fill_date = row['fill_date']
+				
+				unique_patients.add(patient_id)
+				
+				med = Medication(med_name, dosage, days_supply, fill_date)
+				med.calculate_days_overdue(current_date)
+				medications.append(med)
+				
+				if patient_id not in patient_info:
+					patient_info[patient_id] = []
+				patient_info[patient_id].append(med)
+	
+	except FileNotFoundError:
+		print(f"Error: File '{filename}' not found.")
+		return None, None
+	except KeyError as e:
+		print(f"Error: Missing required column {e} in CSV file.")
+		return None, None
+	except ValueError as e:
+		print(f"Error: Invalid data format - {e}")
+		return None, None
+	else:
+		
+		print(f"Successfully read {len(medications)} medication records")
+		print(f"Found {len(unique_patients)} unique patient(s)")
+		return patient_info, medications
+
+
+def write_report(patient_info, medications, current_date, output_filename):
+	""" This function generates a compliance report and writes to an output file """
+	
+	with open(output_filename, 'w') as output:
+		output.write("-" * 30 + "\n")
+		output.write("Medication Refill Compliance Report:\n")
+		output.write(f"Report Date: {current_date.strftime('%Y-%m-%d')}\n")
+		output.write("-" * 30 + "\n\n")
+		
+		# summary 
+		compliance_rate = calculate_compliance_rate(medications)
+		overdue_count = sum(1 for med in medications if med.is_overdue())
+		
+		output.write("Overall:\n")
+		output.write("-" * 30 + "\n")
+		output.write(f"Total Medications: {len(medications)}\n")
+		output.write(f"Compliance Rate: {compliance_rate:.1f}%\n")
+		output.write(f"Overdue Medications: {overdue_count}\n")
+		output.write(f"Total Patients: {len(patient_info)}\n\n")
+		
+		# Patient details
+		output.write("Patient Level Report:\n")
+		output.write("-" * 30 + "\n\n")
+		
+		for patient_id, meds in patient_info.items():
+			output.write(f"Patient: {patient_id}\n")
+			output.write("-" * 30 + "\n")
+			
+			patient_compliance = calculate_compliance_rate(meds)
+			output.write(f"Patient Compliance Rate: {patient_compliance:.1f}%\n")
+			output.write(f"Number of Medications: {len(meds)}\n\n")
+			
+			for med in meds:
+				output.write(f"  {str(med)}\n")
+				output.write(f"    Fill Date: {med.fill_date.strftime('%Y-%m-%d')}\n")
+				output.write(f"    Expected Refill: {med._get_refill_date_string()}\n")
+				output.write(f"    Days Supply: {len(med)}\n")
+			
+			output.write("\n")
+	
+	print(f"Report generated: {output_filename}")
+
+
+# main execution 
+print("Medication Adherence Tracker Report:")
+print("-" * 30 + "\n")
+
+file_config = ('sample_medications.csv', 'compliance_report.txt')
+input_file, output_file = file_config
+
+current_date = datetime.now()
+
+patient_info, medications = read_medications(input_file, current_date)
+
+if patient_info and medications:
+	write_report(patient_info, medications, current_date, output_file)
+	
+	compliance_rate = calculate_compliance_rate(medications)
+	overdue_count = sum(1 for med in medications if med.is_overdue())
+	
+	print("\n")
+	print("Summary:")
+	print("-" * 30)
+	print(f"Overall Compliance Rate: {compliance_rate:.1f}%")
+	print(f"Total Overdue Medications: {overdue_count} of {len(medications)}")
+	print(f"Total Patients: {len(patient_info)}")
+	print(f"\nFull patient detail report: {output_file}")
+else:
+	print("Failed to process medication data.")
+
+print("-" * 30 + "\n")
+									</code></pre>
+									<br>
+									<h4>Compliance Report</h4>
+									<p>Once file(s) have been processed, the program will generate a compliance report in .txt format, which contains both summary and patient level details around medication adherence.</p>
+									<pre><code class="language-python">
+------------------------------
+Medication Refill Compliance Report:
+Report Date: 2025-12-07
+------------------------------
+
+Overall:
+------------------------------
+Total Medications: 18
+Compliance Rate: 33.3%
+Overdue Medications: 12
+Total Patients: 10
+
+Patient Level Report:
+------------------------------
+
+Patient: P001
+------------------------------
+Patient Compliance Rate: 0.0%
+Number of Medications: 3
+
+	Lisinopril 10mg - overdue (+237 days)
+	Fill Date: 2025-03-15
+	Expected Refill: 2025-04-14
+	Days Supply: 30
+	Metformin 500mg - overdue (+99 days)
+	Fill Date: 2025-06-01
+	Expected Refill: 2025-08-30
+	Days Supply: 90
+	Aspirin 81mg - overdue (+352 days)
+	Fill Date: 2024-11-20
+	Expected Refill: 2024-12-20
+	Days Supply: 30
+
+Patient: P002
+------------------------------
+Patient Compliance Rate: 0.0%
+Number of Medications: 2
+
+	Atorvastatin 20mg - overdue (+105 days)
+	Fill Date: 2025-07-25
+	Expected Refill: 2025-08-24
+	Days Supply: 30
+	Levothyroxine 50mcg - overdue (+190 days)
+	Fill Date: 2025-05-01
+	Expected Refill: 2025-05-31
+	Days Supply: 30
+
+Patient: P003
+------------------------------
+Patient Compliance Rate: 66.7%
+Number of Medications: 3
+
+	Amlodipine 5mg - overdue (+53 days)
+	Fill Date: 2025-09-15
+	Expected Refill: 2025-10-15
+	Days Supply: 30
+	Omeprazole 20mg - ok (-13 days)
+	Fill Date: 2025-11-20
+	Expected Refill: 2025-12-20
+	Days Supply: 30
+	Warfarin 5mg - ok (-8 days)
+	Fill Date: 2025-11-15
+	Expected Refill: 2025-12-15
+	Days Supply: 30
+
+Patient: P004
+------------------------------
+Patient Compliance Rate: 0.0%
+Number of Medications: 1
+
+	Metformin 500mg - overdue (+29 days)
+	Fill Date: 2025-08-10
+	Expected Refill: 2025-11-08
+	Days Supply: 90
+
+Patient: P005
+------------------------------
+Patient Compliance Rate: 0.0%
+Number of Medications: 1
+
+	Lisinopril 10mg - overdue (+23 days)
+	Fill Date: 2025-09-15
+	Expected Refill: 2025-11-14
+	Days Supply: 60
+
+Patient: P006
+------------------------------
+Patient Compliance Rate: 50.0%
+Number of Medications: 2
+
+	Propanolol 60mg - ok (-84 days)
+	Fill Date: 2025-12-01
+	Expected Refill: 2026-03-01
+	Days Supply: 90
+	Hydroxyzine 25mg - overdue (+37 days)
+	Fill Date: 2025-10-01
+	Expected Refill: 2025-10-31
+	Days Supply: 30
+
+Patient: P007
+------------------------------
+Patient Compliance Rate: 100.0%
+Number of Medications: 1
+
+	Amoxicillin 500mg - ok (-8 days)
+	Fill Date: 2025-12-01
+	Expected Refill: 2025-12-15
+	Days Supply: 14
+
+Patient: P008
+------------------------------
+Patient Compliance Rate: 0.0%
+Number of Medications: 1
+
+	Warfarin 5mg - overdue (+53 days)
+	Fill Date: 2025-09-15
+	Expected Refill: 2025-10-15
+	Days Supply: 30
+
+Patient: P009
+------------------------------
+Patient Compliance Rate: 0.0%
+Number of Medications: 2
+
+	Atorvastatin 20mg - overdue (+2 days)
+	Fill Date: 2025-11-05
+	Expected Refill: 2025-12-05
+	Days Supply: 30
+	Levothyroxine 50mcg - overdue (+6 days)
+	Fill Date: 2025-11-01
+	Expected Refill: 2025-12-01
+	Days Supply: 30
+
+Patient: P010
+------------------------------
+Patient Compliance Rate: 100.0%
+Number of Medications: 2
+
+	Metformin 500mg - ok (-37 days)
+	Fill Date: 2025-11-14
+	Expected Refill: 2026-01-13
+	Days Supply: 60
+	Aspirin 81mg - ok (-37 days)
+	Fill Date: 2025-11-14
+	Expected Refill: 2026-01-13
+	Days Supply: 60
+										
+										
+									</code></pre>
+									<br>
+									<h4>Unit Testing</h4>
+									<p>And to validate the public methods in our Medication class are working as intended, we can conduct a few simple unit tests.</p>
+									<pre><code class="language-python">
+""" This Unit Test validates that the public methods of the medication class are working as expected."""
+
+import unittest
+from datetime import datetime
+from MedicationClass import Medication
+
+class TestMedicationMethods(unittest.TestCase):
+	#test 1
+	def test_calculate_days_overdue(self):
+		fill_date = "2024-10-18"
+		test_date = datetime(2024, 12, 2)
+		med = Medication("Lisinopril", "10mg", 30, fill_date)
+		days_overdue = med.calculate_days_overdue(test_date)
+		self.assertEqual(days_overdue, 15)
+	#test 2
+	def test_is_overdue(self):
+		test_date = datetime(2024, 12, 2)
+		med1 = Medication("Metformin", "500mg", 30, "2024-10-15")
+		med1.calculate_days_overdue(test_date)
+		self.assertTrue(med1.is_overdue())
+
+		med2 = Medication("Aspirin", "81mg", 30, "2024-11-20")
+		med2.calculate_days_overdue(test_date)
+		self.assertFalse(med2.is_overdue())
+
+if __name__ == "__main__":
+	unittest.main(argv=[''], verbosity=2, exit=False)
+									</code></pre>
+									<section>
+										<div class="box alt">
+											<div class="row gtr-uniform">
+											<div class="col-12"><span class="image fit"><img src="images/ma-unittest.jpg" alt="" />
+											</span></div>
+									</section>
+									<!-- <br>
+									<p>closign remarks here as needed</p> -->
+						</div>
+					</div>
+
+				<!-- Footer -->
+				<!-- Footer -->
+				<footer id="footer">
+					<div class="inner">
+						<!-- <section>
+							<h2>Get in touch</h2>
+							<form method="post" action="#">
+								<div class="fields">
+									<div class="field half">
+										<input type="text" name="name" id="name" placeholder="Name" />
+									</div>
+									<div class="field half">
+										<input type="email" name="email" id="email" placeholder="Email" />
+									</div>
+									<div class="field">
+										<textarea name="message" id="message" placeholder="Message"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send" class="primary" /></li>
+								</ul>
+							</form>
+						</section> -->
+						<section>
+							<h2>Follow</h2>
+							<ul class="icons">
+								<li><a href="https://github.com/tguggenberger13/tguggenberger13.github.io" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+								<li><a href="https://www.linkedin.com/in/tyler-guggenberger-b0840755/" class="icon brands style2 fa-linkedin"><span class="label">LinkedIn</span></a></li>
+								<!-- <li><a href="#" class="icon solid style2 fa-phone"><span class="label">Phone</span></a></li>
+								<li><a href="#" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li> -->
+							</ul>
+						</section>
+						<ul class="copyright">
+							<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						</ul>
+					</div>
+				</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
