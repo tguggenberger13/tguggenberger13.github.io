@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>340B Reconciliation Connector — Strategic Product Opportunity Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:        #0c1a2e;
+    --paper:      #f3f5f8;
+    --white:      #ffffff;
+    --cream:      #edf0f5;
+    --forest:     #1a5c4a;
+    --forest-lt:  #27856a;
+    --forest-pale:#ddf0ea;
+    --navy:       #0f2d5c;
+    --navy-lt:    #1e4d8c;
+    --amber:      #c87c0a;
+    --amber-lt:   #e8960e;
+    --amber-pale: #fef3e0;
+    --rule:       #c4cdd8;
+    --slate:      #3d5068;
+    --slate-lt:   #6a7f94;
+    --mid:        #384858;
+    --red:        #b83030;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER RULE ── */
+  .header-rule {
+    height: 5px;
+    background: linear-gradient(90deg, var(--navy) 0%, var(--forest) 50%, var(--forest-lt) 100%);
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 90% at 90% 40%, rgba(26,92,74,0.2) 0%, transparent 65%),
+      radial-gradient(ellipse 35% 50% at 5% 90%, rgba(15,45,92,0.3) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Subtle circuit-line texture */
+  header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(39,133,106,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(39,133,106,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 62px 48px 54px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 28px;
+    align-items: end;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--forest-lt);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .header-eyebrow::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--forest-lt);
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(32px, 4.4vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--white);
+    max-width: 700px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--forest-lt);
+  }
+
+  .header-meta {
+    text-align: right;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--slate-lt);
+    letter-spacing: 0.07em;
+    line-height: 2.1;
+  }
+
+  .header-subtitle {
+    grid-column: 1 / -1;
+    font-size: 15.5px;
+    color: #8a9db0;
+    max-width: 680px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 22px;
+    margin-top: 6px;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  .section-nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(12,26,46,0.07);
+  }
+
+  .section-nav ul {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+    list-style: none;
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .section-nav li a {
+    display: block;
+    padding: 13px 17px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--slate);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .section-nav li a:hover { color: var(--forest); border-bottom-color: var(--forest); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+  section {
+    padding: 68px 0;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  section.visible { opacity: 1; transform: translateY(0); }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); max-width: 72px; }
+
+  h2 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(24px, 3vw, 34px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 26px;
+  }
+
+  h3 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  p { color: var(--mid); font-size: 15px; margin-bottom: 14px; max-width: 740px; }
+
+  strong { color: var(--ink); }
+
+  /* ── PIPELINE DIAGRAM ── */
+  .pipeline {
+    margin: 36px 0;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  .pipe-node {
+    flex: 1;
+    min-width: 130px;
+    background: var(--white);
+    border: 1px solid var(--rule);
+    padding: 20px 16px;
+    text-align: center;
+    position: relative;
+  }
+
+  .pipe-node.dark { background: var(--ink); }
+  .pipe-node.gap-node {
+    background: var(--amber);
+    border-color: var(--amber);
+    animation: pulse-amber 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse-amber {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(200,124,10,0.35); }
+    50%       { box-shadow: 0 0 0 8px rgba(200,124,10,0); }
+  }
+
+  .pipe-node.connector-node {
+    background: var(--forest);
+    border-color: var(--forest);
+  }
+
+  .pipe-node::after {
+    content: '→';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--rule);
+    font-size: 18px;
+    z-index: 2;
+    background: var(--paper);
+    padding: 2px;
+  }
+
+  .pipe-node:last-child::after { display: none; }
+
+  .pipe-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .pipe-node .pipe-label { color: var(--slate-lt); }
+  .pipe-node.dark .pipe-label { color: #6a8098; }
+  .pipe-node.gap-node .pipe-label { color: rgba(255,255,255,0.75); }
+  .pipe-node.connector-node .pipe-label { color: rgba(255,255,255,0.75); }
+
+  .pipe-name {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .pipe-node .pipe-name { color: var(--ink); }
+  .pipe-node.dark .pipe-name { color: var(--white); }
+  .pipe-node.gap-node .pipe-name { color: var(--white); }
+  .pipe-node.connector-node .pipe-name { color: var(--white); }
+
+  .pipe-sub {
+    font-size: 10px;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  .pipe-node .pipe-sub { color: var(--slate-lt); }
+  .pipe-node.dark .pipe-sub { color: #6a8098; }
+  .pipe-node.gap-node .pipe-sub { color: rgba(255,255,255,0.75); }
+  .pipe-node.connector-node .pipe-sub { color: rgba(255,255,255,0.8); }
+
+  /* ── THESIS CARDS ── */
+  .thesis-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-top: 36px;
+  }
+
+  .thesis-card { background: var(--white); padding: 30px 26px; }
+  .thesis-card.dark { background: var(--ink); }
+  .thesis-card.dark h3 { color: var(--forest-lt); }
+  .thesis-card.dark p { color: #7a90a4; max-width: 100%; }
+
+  .thesis-number {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--forest);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  /* ── STAT ROW ── */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin: 36px 0;
+  }
+
+  .stat-box {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    padding: 24px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--navy), var(--forest));
+  }
+
+  .stat-value {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+
+  .stat-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--slate-lt);
+    line-height: 1.45;
+  }
+
+  /* ── ALERT BOX ── */
+  .alert-box {
+    background: var(--amber-pale);
+    border-left: 4px solid var(--amber);
+    padding: 20px 24px;
+    margin: 24px 0;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .alert-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .alert-box p { color: #5a3800; max-width: 100%; margin: 0; font-size: 14px; }
+  .alert-box strong { color: #3a2200; }
+
+  /* ── SOURCE CARDS ── */
+  .source-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .source-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+
+  .source-header {
+    background: var(--ink);
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .source-header h3 { color: var(--forest-lt); font-size: 14px; margin: 0; }
+
+  .source-tier {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: #5a7a6a;
+  }
+
+  .source-body { padding: 18px; }
+
+  .source-vendors {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--forest);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .source-body p { font-size: 13px; color: #556070; max-width: 100%; margin-bottom: 10px; }
+
+  .source-format {
+    background: var(--cream);
+    padding: 6px 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--slate);
+    display: inline-block;
+  }
+
+  /* ── PRICING ── */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+    margin-top: 36px;
+  }
+
+  .pricing-tier {
+    border: 1px solid var(--rule);
+    background: var(--white);
+    overflow: hidden;
+  }
+
+  .pricing-tier.featured {
+    border-color: var(--forest);
+    box-shadow: 0 6px 28px rgba(26,92,74,0.13);
+    transform: translateY(-3px);
+  }
+
+  .pricing-header {
+    padding: 20px 22px 16px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .pricing-tier.featured .pricing-header { background: var(--ink); }
+  .pricing-tier.featured .pricing-header h3 { color: var(--forest-lt); }
+
+  .pricing-type {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--slate-lt);
+    margin-bottom: 6px;
+  }
+
+  .pricing-tier.featured .pricing-type { color: #4a6a5a; }
+
+  .pricing-range {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--forest);
+    margin: 6px 0 2px;
+  }
+
+  .pricing-body { padding: 18px 22px; }
+  .pricing-body ul { list-style: none; }
+
+  .pricing-body li {
+    font-size: 13px;
+    color: #4a5a6a;
+    padding: 6px 0;
+    border-bottom: 1px solid #edf0f5;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .pricing-body li::before { content: '→'; color: var(--forest); font-size: 11px; flex-shrink: 0; margin-top: 2px; }
+
+  /* ── UNIT ECONOMICS ── */
+  .econ-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .econ-table {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+
+  .econ-table-header {
+    background: var(--ink);
+    padding: 12px 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--forest-lt);
+  }
+
+  .econ-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 13.5px;
+  }
+
+  .econ-row:last-child { border-bottom: none; }
+  .econ-row.total { background: var(--forest-pale); font-weight: 500; }
+  .econ-row.total .econ-val { color: var(--forest); font-family: 'Libre Baskerville', serif; font-weight: 700; }
+  .econ-label { color: var(--mid); }
+  .econ-val { color: var(--ink); font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; }
+
+  /* ── CLIENT CARDS ── */
+  .client-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .client-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--navy);
+    padding: 26px;
+    transition: border-top-color 0.2s;
+  }
+
+  .client-card:hover { border-top-color: var(--forest); }
+
+  .client-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 6px;
+  }
+
+  .client-card h3 { font-size: 16px; margin-bottom: 8px; }
+  .client-card p { font-size: 13.5px; max-width: 100%; margin-bottom: 10px; color: #55606f; }
+
+  .buyer-tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.07em;
+    background: var(--forest-pale);
+    color: var(--forest);
+    border: 1px solid rgba(26,92,74,0.2);
+    padding: 3px 9px;
+    margin: 2px 3px 2px 0;
+  }
+
+  /* ── CROSS-SELL TABLE ── */
+  .crosssell-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 32px;
+    font-size: 13.5px;
+  }
+
+  .crosssell-table thead tr { background: var(--ink); }
+
+  .crosssell-table thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #6a8090;
+    font-weight: 400;
+  }
+
+  .crosssell-table tbody tr {
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.15s;
+  }
+
+  .crosssell-table tbody tr:nth-child(even) { background: var(--cream); }
+  .crosssell-table tbody tr:hover { background: var(--forest-pale); }
+  .crosssell-table td { padding: 11px 16px; color: var(--mid); vertical-align: top; }
+  .crosssell-table td:first-child { font-weight: 500; color: var(--ink); white-space: nowrap; }
+
+  .badge { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 9px; padding: 3px 7px; border: 1px solid; }
+  .badge-high { background: var(--forest-pale); border-color: rgba(26,92,74,0.35); color: var(--forest); }
+  .badge-med  { background: var(--amber-pale); border-color: rgba(200,124,10,0.35); color: var(--amber); }
+
+  /* ── COMPETITION ── */
+  .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+
+  .comp-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    padding: 24px;
+  }
+
+  .comp-card.opportunity {
+    border-color: var(--forest);
+    background: linear-gradient(135deg, #f0faf6, #fff);
+    grid-column: 1 / -1;
+  }
+
+  .comp-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--slate-lt);
+    margin-bottom: 6px;
+  }
+
+  .comp-weakness {
+    font-size: 12.5px;
+    color: #607080;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .comp-weakness strong { color: var(--red); }
+  .comp-card.opportunity .comp-weakness strong { color: var(--forest); }
+  .comp-card.opportunity .comp-weakness { color: #1a4a38; }
+
+  .moat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .moat-item {
+    background: rgba(26,92,74,0.07);
+    border: 1px solid rgba(26,92,74,0.2);
+    padding: 12px;
+  }
+
+  .moat-item strong {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 4px;
+  }
+
+  .moat-item p { font-size: 12px; color: #1a4038; max-width: 100%; margin: 0; }
+
+  /* ── INPUTS ── */
+  .inputs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 32px; }
+
+  .input-section h3 {
+    font-size: 15px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--forest);
+    display: inline-block;
+  }
+
+  .input-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+
+  .input-cost {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--forest);
+    white-space: nowrap;
+  }
+
+  .input-item h4 { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+  .input-item p { font-size: 12.5px; color: #607080; margin: 0; max-width: 100%; }
+
+  .total-box {
+    background: var(--ink);
+    padding: 20px 24px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 3px solid var(--forest);
+  }
+
+  .total-box .t-label { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #4a6a5a; }
+  .total-box .t-sub { font-size: 11px; color: #3a5040; margin-top: 3px; }
+  .total-box .t-value { font-family: 'Libre Baskerville', serif; font-size: 26px; color: var(--forest-lt); }
+
+  /* ── TIMELINE ── */
+  .timeline { margin-top: 40px; }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 22px;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  .timeline-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 31px;
+    top: 64px;
+    height: 36px;
+    width: 1px;
+    background: var(--rule);
+    z-index: 0;
+  }
+
+  .tl-dot {
+    width: 64px; height: 64px;
+    background: var(--white);
+    border: 1.5px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    color: var(--forest);
+    text-align: center;
+    z-index: 1;
+    line-height: 1.3;
+    flex-shrink: 0;
+  }
+
+  .timeline-item.ph-active .tl-dot { background: var(--forest); color: var(--white); border-color: var(--forest); }
+  .timeline-item.ph-future .tl-dot { background: var(--ink); color: var(--forest-lt); border-color: var(--ink); }
+
+  .tl-content { padding-top: 10px; padding-bottom: 32px; }
+
+  .tl-period {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 4px;
+  }
+
+  .tl-content h3 { font-size: 16px; margin-bottom: 8px; }
+  .tl-content p { font-size: 13.5px; max-width: 100%; color: #556070; }
+
+  .kpi-row { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 10px; }
+
+  .kpi-chip {
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    padding: 3px 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.07em;
+    color: var(--slate);
+  }
+
+  /* ── VERDICT ── */
+  .verdict-section {
+    background: var(--ink);
+    padding: 68px 0;
+    border-top: 4px solid var(--forest);
+    border-bottom: none;
+  }
+
+  .verdict-section p { color: #7a90a4; }
+  .verdict-section h2 { color: var(--white); }
+  .verdict-section .section-label { color: var(--forest-lt); }
+  .verdict-section .section-label::after { background: #1e3040; }
+
+  .verdict-boxes { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 32px; }
+
+  .verdict-box { border: 1px solid #1e3050; padding: 24px; transition: border-color 0.2s; }
+  .verdict-box:hover { border-color: var(--forest); }
+
+  .v-num {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 36px;
+    color: var(--forest-lt);
+    font-weight: 700;
+    margin-bottom: 6px;
+    line-height: 1;
+  }
+
+  .verdict-box h4 { font-size: 14px; color: var(--white); margin-bottom: 7px; }
+  .verdict-box p { font-size: 12.5px; max-width: 100%; margin: 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060e1a;
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    color: #1e2e3e;
+  }
+
+  @media (max-width: 768px) {
+    .header-inner { grid-template-columns: 1fr; padding: 36px 20px; }
+    .container { padding: 0 20px; }
+    .thesis-grid, .stat-row, .source-grid, .pricing-grid, .client-grid,
+    .comp-grid, .inputs-grid, .verdict-boxes, .moat-grid, .econ-grid { grid-template-columns: 1fr; }
+    .comp-card.opportunity { grid-column: 1; }
+    .pipeline { flex-direction: column; }
+    .pipe-node::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header-rule"></div>
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-eyebrow">Strategic Product Opportunity</div>
+      <h1>The <em>340B Connector</em>:<br>Bridging to the General Ledger</h1>
+    </div>
+    <div class="header-meta">
+      <div>Prepared for Internal Review</div>
+      <div>Practice Development Committee</div>
+      <div>Prepared by Tyler Guggenberger</div>
+    </div>
+    <p class="header-subtitle">
+      How a CPA firm can build and own a lightweight integration connector that solves one of the most painful, universally shared, and entirely unaddressed operational problems in safety-net healthcare — and why ~1,400 FQHCs have been waiting for someone credible to build it.
+    </p>
+  </div>
+</header>
+
+<nav class="section-nav">
+  <ul>
+    <li><a href="#thesis">Thesis</a></li>
+    <li><a href="#the-gap">The Gap</a></li>
+    <li><a href="#sources">Data Sources</a></li>
+    <li><a href="#market">Market</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#clients">Clients</a></li>
+    <li><a href="#crosssell">Cross-Sell</a></li>
+    <li><a href="#competition">Competition</a></li>
+    <li><a href="#inputs">Inputs</a></li>
+    <li><a href="#timeline">Rollout</a></li>
+    <li><a href="#verdict">Verdict</a></li>
+  </ul>
+</nav>
+
+<!-- 01 THESIS -->
+<section id="thesis">
+  <div class="container">
+    <div class="section-label">01 — The Core Thesis</div>
+    <h2>A Narrow Problem, Universally Shared,<br>With No Vendor Bothering to Solve It</h2>
+    <p>The 340B Drug Pricing Program gives federally qualified health centers, rural health clinics, and qualifying hospitals access to deeply discounted pharmaceuticals — often 25–50% below wholesale acquisition cost. It is one of the most financially significant programs available to safety-net providers. And the reconciliation between the pharmacy data and the general ledger is, at virtually every covered entity in the country, done entirely by hand.</p>
+    <p>The data lives in a TPA like Macro Helix, Aventi, or CaptureRx. The GL lives in Sage Intacct or NetSuite. No one has built the connector. A CPA firm that builds it doesn't just sell a product — it walks into every FQHC relationship in its book with a solution to a problem that every CFO and Controller feels in their bones every single month.</p>
+
+    <div class="thesis-grid">
+      <div class="thesis-card dark">
+        <div class="thesis-number">~1,400</div>
+        <h3>FQHCs in the U.S.</h3>
+        <p>Every single one participates in 340B. Every single one is doing this reconciliation manually or not doing it accurately. This is not a market you have to convince — it's a market you have to reach.</p>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-number">01</div>
+        <h3>The Rebate Shift Makes It Urgent Now</h3>
+        <p>Manufacturers are moving from upfront 340B discounts to post-adjudicated rebate models. That transition turns a manageable spreadsheet problem into an active receivables management, accrual, and revenue recognition problem — one that ERPs are not configured to handle.</p>
+      </div>
+      <div class="thesis-card">
+        <div class="thesis-number">02</div>
+        <h3>No Major Vendor Has Touched It</h3>
+        <p>The niche is narrow enough that Workday, Oracle, and Sage themselves haven't built native connectors. The TPAs publish export formats but don't provide GL integration. This is a greenfield product opportunity with a captive, motivated buyer base.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 THE GAP -->
+<section id="the-gap">
+  <div class="container">
+    <div class="section-label">02 — The Data Gap</div>
+    <h2>Where the Data Lives and Where It Needs to Go</h2>
+    <p>The 340B data flow involves four distinct systems before it ever reaches the general ledger. The connector sits at the critical last mile — between the TPA's savings and claims data and the ERP's chart of accounts. That step is currently a manual export, a spreadsheet transformation, and a human journal entry. Every month.</p>
+
+    <div class="pipeline">
+      <div class="pipe-node dark">
+        <div class="pipe-label">Step 1</div>
+        <div class="pipe-name">EHR</div>
+        <div class="pipe-sub">Patient encounter<br>& eligibility data</div>
+      </div>
+      <div class="pipe-node">
+        <div class="pipe-label">Step 2 — TPA</div>
+        <div class="pipe-name">Macro Helix<br>Aventi / CaptureRx</div>
+        <div class="pipe-sub">340B eligibility<br>determination</div>
+      </div>
+      <div class="pipe-node">
+        <div class="pipe-label">Step 3</div>
+        <div class="pipe-name">Wholesaler</div>
+        <div class="pipe-sub">Cardinal / McKesson<br>Purchase at 340B price</div>
+      </div>
+      <div class="pipe-node gap-node">
+        <div class="pipe-label">⚠ The Gap</div>
+        <div class="pipe-name">Manual Export<br>+ Spreadsheet</div>
+        <div class="pipe-sub">Human reconciliation<br>every month</div>
+      </div>
+      <div class="pipe-node connector-node">
+        <div class="pipe-label">The Connector</div>
+        <div class="pipe-name">Automated<br>GL Mapping</div>
+        <div class="pipe-sub">Savings → Journal<br>Entry → ERP</div>
+      </div>
+      <div class="pipe-node dark">
+        <div class="pipe-label">Destination</div>
+        <div class="pipe-name">Intacct /<br>NetSuite</div>
+        <div class="pipe-sub">Accurate GL,<br>real-time savings</div>
+      </div>
+    </div>
+
+    <div class="alert-box">
+      <div class="alert-icon">⚡</div>
+      <p><strong>The rebate model changes everything.</strong> In the traditional discount model, 340B savings hit immediately and bookkeeping is straightforward — you bought drugs cheap, you record the savings. In the emerging manufacturer rebate pilot model, covered entities must track receivables, manage accruals, and recognize revenue on a timeline they can't fully predict. Each rebate claim arrives as one of: approved, denied, pending, reversed, or tied up in a Good-Faith Inquiry. Their ERPs have none of this logic. The connector doesn't just automate what was manual — it implements financial logic that simply didn't exist before.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 DATA SOURCES -->
+<section id="sources">
+  <div class="container">
+    <div class="section-label">03 — Integration Architecture</div>
+    <h2>Three Source Systems, One Connector</h2>
+    <p>The connector has three realistic integration sources, each providing a different layer of the reconciliation picture. A complete implementation draws from all three — TPA for eligibility and savings detail, wholesaler for purchase confirmation, and 340B ESP for manufacturer compliance verification.</p>
+
+    <div class="source-grid">
+      <div class="source-card">
+        <div class="source-header">
+          <h3>TPA Data Layer</h3>
+          <span class="source-tier">Primary Source</span>
+        </div>
+        <div class="source-body">
+          <div class="source-vendors">Macro Helix · Aventi · CaptureRx · CarepathRx</div>
+          <p>The richest source. Contains actual 340B-qualified claim detail: drug, NDC, quantity, WAC price, 340B price, spread/savings. This is the data you need to post accurate GL entries and manage accruals under the rebate model.</p>
+          <p>Most TPAs provide structured CSV or EDI exports; several have API access available under data sharing agreements.</p>
+          <span class="source-format">CSV / EDI / API</span>
+        </div>
+      </div>
+
+      <div class="source-card">
+        <div class="source-header">
+          <h3>Wholesaler Invoices</h3>
+          <span class="source-tier">Reconciliation Layer</span>
+        </div>
+        <div class="source-body">
+          <div class="source-vendors">Cardinal Health · McKesson · AmerisourceBergen</div>
+          <p>Cleaner and more structured than TPA data. Tells you what was purchased at 340B pricing — useful as a reconciliation layer against TPA eligibility data, particularly where manufacturer restrictions cause eligible vs. purchased to diverge.</p>
+          <p>All three major wholesalers offer purchase order and invoice data feeds via EDI 810 or portal export.</p>
+          <span class="source-format">EDI 810 / Portal Export</span>
+        </div>
+      </div>
+
+      <div class="source-card">
+        <div class="source-header">
+          <h3>340B ESP Claims</h3>
+          <span class="source-tier">Compliance Layer</span>
+        </div>
+        <div class="source-body">
+          <div class="source-vendors">340B ESP (Manufacturer Compliance)</div>
+          <p>Increasingly required for covered entities as manufacturers use ESP to identify drugs subject to both PBM and 340B discounts. Produces structured claims data that feeds a manufacturer compliance reconciliation workflow — critical for entities under scrutiny.</p>
+          <p>Structured claims data available via the ESP portal for enrolled covered entities.</p>
+          <span class="source-format">Structured Claims Export</span>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top: 24px;"><strong>Target GL destinations in v1.0:</strong> Sage Intacct and NetSuite — the two ERPs with dominant share in the FQHC / nonprofit healthcare market. Both have mature API ecosystems and well-documented journal entry endpoints. A Sage Intacct native app marketplace listing is achievable and would be a material distribution accelerant.</p>
+  </div>
+</section>
+
+<!-- 04 MARKET -->
+<section id="market">
+  <div class="container">
+    <div class="section-label">04 — Market Size & Urgency</div>
+    <h2>A Captive Market With a Shared, Felt Pain</h2>
+    <p>The addressable market for the connector is well-defined, relatively easy to enumerate, and highly concentrated — making go-to-market efficient. Every FQHC participates in 340B by definition. The buyer (CFO or Controller) is predictable. The pain is universal. The only question is reach.</p>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-value">~1,400</div>
+        <div class="stat-label">FQHCs in the U.S.<br>(HRSA-designated)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value">~3,500</div>
+        <div class="stat-label">Total 340B Covered<br>Entities (all types)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value">$44B+</div>
+        <div class="stat-label">Estimated Annual 340B<br>Drug Program Volume</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-value">100%</div>
+        <div class="stat-label">FQHC Participation<br>Rate (mandatory)</div>
+      </div>
+    </div>
+
+    <p>Beyond FQHCs, the broader 340B covered entity universe includes qualifying hospitals (disproportionate share hospitals, critical access hospitals, children's hospitals), Ryan White HIV/AIDS clinics, hemophilia treatment centers, and tribal health programs — expanding the total addressable market to roughly 3,500 entities, many of whom share the same GL infrastructure and TPA relationships.</p>
+
+    <p>The timing element is real: as manufacturer rebate pilots expand under the 340B Program Integrity Act discussions, finance teams are actively asking how to manage this. A connector that handles both the traditional discount model and the emerging rebate model is positioned as a forward-looking solution, not a retrospective patch.</p>
+  </div>
+</section>
+
+<!-- 05 PRICING -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-label">05 — Pricing & Revenue Model</div>
+    <h2>SaaS Economics in a Nonprofit-Friendly Wrapper</h2>
+    <p>The connector is a software product with SaaS pricing — annual subscription with implementation fees. Pricing must be calibrated to what FQHCs can actually pay (these are nonprofit safety-net providers, not commercial health systems), while still generating meaningful revenue at scale. The model that works best in this market is a tiered subscription with a light implementation component.</p>
+
+    <div class="pricing-grid">
+      <div class="pricing-tier">
+        <div class="pricing-header">
+          <div class="pricing-type">Entry Tier</div>
+          <h3>Essentials</h3>
+          <div class="pricing-range">$8K–$15K/yr</div>
+        </div>
+        <div class="pricing-body">
+          <ul>
+            <li>Single TPA integration (Macro Helix or Aventi)</li>
+            <li>Sage Intacct or NetSuite GL mapping</li>
+            <li>Monthly automated journal entry posting</li>
+            <li>Standard discount model only</li>
+            <li>Email support, quarterly check-in</li>
+            <li>Target: smaller FQHCs, single-site</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pricing-tier featured">
+        <div class="pricing-header">
+          <div class="pricing-type">Core Tier — Most Common</div>
+          <h3>Professional</h3>
+          <div class="pricing-range">$18K–$32K/yr</div>
+        </div>
+        <div class="pricing-body">
+          <ul>
+            <li>Multi-TPA and wholesaler integration</li>
+            <li>Full rebate model support (receivables, accruals)</li>
+            <li>ESP compliance reconciliation layer</li>
+            <li>Custom GL chart of accounts mapping</li>
+            <li>Monthly variance and exception reporting</li>
+            <li>Dedicated CSM, monthly touchpoints</li>
+            <li>Target: mid-size FQHCs, multi-site CHCs</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pricing-tier">
+        <div class="pricing-header">
+          <div class="pricing-type">Enterprise Tier</div>
+          <h3>Health System</h3>
+          <div class="pricing-range">$40K–$80K/yr</div>
+        </div>
+        <div class="pricing-body">
+          <ul>
+            <li>All Professional features</li>
+            <li>Multi-entity / health system support</li>
+            <li>Custom revenue recognition rules</li>
+            <li>Audit-ready documentation package</li>
+            <li>Compliance dashboard for 340B audits</li>
+            <li>API access for BI tool integration</li>
+            <li>Target: DSH hospitals, FQHC health systems</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="econ-grid" style="margin-top: 32px;">
+      <div class="econ-table">
+        <div class="econ-table-header">Year 3 SaaS Scenario — Conservative</div>
+        <div class="econ-row"><span class="econ-label">Essentials clients (80 @ $11K avg.)</span><span class="econ-val">$880K</span></div>
+        <div class="econ-row"><span class="econ-label">Professional clients (60 @ $24K avg.)</span><span class="econ-val">$1.44M</span></div>
+        <div class="econ-row"><span class="econ-label">Enterprise clients (15 @ $55K avg.)</span><span class="econ-val">$825K</span></div>
+        <div class="econ-row"><span class="econ-label">Implementation fees (one-time, yr 3)</span><span class="econ-val">$340K</span></div>
+        <div class="econ-row total"><span class="econ-label">Total Gross Revenue</span><span class="econ-val">~$3.5M</span></div>
+        <div class="econ-row total"><span class="econ-label">Est. Contribution Margin (65%+)</span><span class="econ-val">~$2.3M</span></div>
+      </div>
+      <div class="econ-table">
+        <div class="econ-table-header">Why SaaS Margins Are Achievable</div>
+        <div class="econ-row"><span class="econ-label">Marginal cost per new client</span><span class="econ-val">Very Low</span></div>
+        <div class="econ-row"><span class="econ-label">TPA / wholesaler API calls</span><span class="econ-val">Minimal $$</span></div>
+        <div class="econ-row"><span class="econ-label">Hosting (cloud, per client)</span><span class="econ-val">~$200–$600/yr</span></div>
+        <div class="econ-row"><span class="econ-label">Support burden (nonprofit clients)</span><span class="econ-val">Moderate</span></div>
+        <div class="econ-row"><span class="econ-label">Churn risk (sticky workflow tool)</span><span class="econ-val">Low</span></div>
+        <div class="econ-row total"><span class="econ-label">Net Revenue Retention potential</span><span class="econ-val">100%+</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 TARGET CLIENTS -->
+<section id="clients">
+  <div class="container">
+    <div class="section-label">06 — Target Client Profiles</div>
+    <h2>Who Feels This Pain Most Acutely</h2>
+    <p>While every 340B covered entity has the reconciliation problem, four profiles are the highest-value early targets — differentiated by urgency, willingness to pay, and strategic value to the firm.</p>
+
+    <div class="client-grid">
+      <div class="client-card">
+        <div class="client-tag">Primary Target — Highest Volume</div>
+        <h3>Mid-Size FQHCs (3–15 sites)</h3>
+        <p>Large enough to feel the reconciliation pain acutely — multiple pharmacy locations, high 340B transaction volume, finance team stretched thin — but small enough that no enterprise vendor has ever called on them. These are the Professional tier sweet spot. CFO and Controller are typically the same person or a two-person team. They will pay for something that works and saves 20+ hours a month.</p>
+        <div><span class="buyer-tag">CFO</span><span class="buyer-tag">Controller</span><span class="buyer-tag">Pharmacy Director</span></div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-tag">High Value — Enterprise Tier</div>
+        <h3>FQHC Health Systems & Networks</h3>
+        <p>Larger organizations that operate 15+ sites or have consolidated multiple FQHCs under a single entity. Their 340B volume is substantial, their audit risk is higher, and they need multi-entity GL support. These clients take longer to close but generate $40K–$80K annually and anchor the enterprise tier. They also tend to be members of national associations (NACHC, state PCAs) — creating referral leverage.</p>
+        <div><span class="buyer-tag">VP Finance</span><span class="buyer-tag">CIO</span><span class="buyer-tag">Compliance Officer</span></div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-tag">Expansion Segment</div>
+        <h3>DSH & Critical Access Hospitals</h3>
+        <p>Disproportionate share hospitals and critical access hospitals participate in 340B under different eligibility criteria but share the same TPA and GL reconciliation problem. They have larger balance sheets, bigger pharmacy volumes, and more exposure to audit — making the compliance documentation features of the Enterprise tier particularly valuable. Finance teams at these organizations are slightly more sophisticated buyers.</p>
+        <div><span class="buyer-tag">CFO</span><span class="buyer-tag">Revenue Cycle Director</span><span class="buyer-tag">340B Coordinator</span></div>
+      </div>
+
+      <div class="client-card">
+        <div class="client-tag">Strategic Channel</div>
+        <h3>State Primary Care Associations (PCAs)</h3>
+        <p>Every state has a Primary Care Association that serves as a hub for FQHCs — providing training, advocacy, and shared services. Partnerships with state PCAs are the most efficient distribution channel in this market. A single PCA relationship can open doors to 30–80 FQHCs in a state. PCAs are also buyers in their own right — several operate shared services programs on behalf of member organizations.</p>
+        <div><span class="buyer-tag">Executive Director</span><span class="buyer-tag">Finance Programs Lead</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 CROSS-SELL -->
+<section id="crosssell">
+  <div class="container">
+    <div class="section-label">07 — Cross-Sell Opportunities</div>
+    <h2>The Connector as a Relationship Door</h2>
+    <p>A CPA firm selling a connector to an FQHC's finance team is establishing a trusted operational relationship — one that makes cross-selling advisory, audit, and compliance services dramatically easier. The connector is a Trojan horse into a client relationship that pays recurring SaaS revenue and opens the door to far larger engagements.</p>
+
+    <table class="crosssell-table">
+      <thead>
+        <tr>
+          <th>Service / Product</th>
+          <th>Connection to 340B Connector Work</th>
+          <th>Avg. Value</th>
+          <th>Likelihood</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>340B Program Compliance Audit</td>
+          <td>The connector surfaces compliance gaps — duplicate discounts, eligibility exceptions — that require formal audit remediation</td>
+          <td>$25K–$80K</td>
+          <td><span class="badge badge-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td>FQHC Financial Audit & Assurance</td>
+          <td>Connector clients naturally trust the firm's financial expertise; audit relationship follows from operational trust</td>
+          <td>$40K–$120K</td>
+          <td><span class="badge badge-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td>Revenue Recognition Advisory</td>
+          <td>Rebate model creates genuine ASC 606 and revenue recognition questions that require advisory guidance</td>
+          <td>$20K–$60K</td>
+          <td><span class="badge badge-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td>Cost Report Preparation (UDS)</td>
+          <td>FQHCs file annual UDS reports to HRSA; accurate 340B data from the connector improves cost report quality and defensibility</td>
+          <td>$15K–$45K</td>
+          <td><span class="badge badge-high">HIGH</span></td>
+        </tr>
+        <tr>
+          <td>ERP Implementation Advisory</td>
+          <td>Connector deployment often exposes Intacct / NetSuite configuration gaps that require optimization or re-implementation</td>
+          <td>$30K–$100K</td>
+          <td><span class="badge badge-med">MEDIUM</span></td>
+        </tr>
+        <tr>
+          <td>340B Program Integrity Consulting</td>
+          <td>HRSA audit defense, policy change readiness, and contract pharmacy compliance advisory for at-risk entities</td>
+          <td>$20K–$75K</td>
+          <td><span class="badge badge-med">MEDIUM</span></td>
+        </tr>
+        <tr>
+          <td>Nonprofit Tax (Form 990)</td>
+          <td>All FQHCs are 501(c)(3) — annual 990 preparation is a natural follow-on service for any firm with the audit relationship</td>
+          <td>$8K–$25K</td>
+          <td><span class="badge badge-med">MEDIUM</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 08 COMPETITION -->
+<section id="competition">
+  <div class="container">
+    <div class="section-label">08 — Competitive Landscape</div>
+    <h2>A Niche Too Small for Big Vendors,<br>Too Specialized for Generic Integrators</h2>
+    <p>The competitive landscape for a 340B-to-GL connector is essentially empty. The few adjacent players either operate upstream (TPAs who stop at claims data), focus on a different problem (340B software platforms), or lack the ERP and accounting credibility to touch the GL. This is the definition of a white space.</p>
+
+    <div class="comp-grid">
+      <div class="comp-card">
+        <div class="comp-name">ERP Vendors — Sage, Oracle NetSuite</div>
+        <h3>The Platform Providers</h3>
+        <p>Own the destination GL. Have massive development resources. Could build this natively if they chose to.</p>
+        <div class="comp-weakness"><strong>Weakness:</strong> The FQHC market is too small and too specialized for their product roadmaps. Neither Sage nor NetSuite has built native 340B support. This niche doesn't move their needle — which is precisely why the gap exists and persists.</div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-name">TPAs — Macro Helix, Aventi, CaptureRx</div>
+        <h3>The Data Owners</h3>
+        <p>Sit on the richest source data. Understand the 340B program deeply. Have existing relationships with covered entities.</p>
+        <div class="comp-weakness"><strong>Weakness:</strong> TPAs are pharmacy operations companies, not finance technology companies. Their product focus is eligibility determination and contract pharmacy management — not GL integration. Building a GL connector would require ERP API expertise and accounting domain knowledge they don't have.</div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-name">Generic iPaaS Tools — Workato, Boomi, MuleSoft</div>
+        <h3>The Integrators</h3>
+        <p>Could technically build point-to-point connectors between TPA exports and Intacct/NetSuite with enough configuration effort.</p>
+        <div class="comp-weakness"><strong>Weakness:</strong> No domain knowledge of 340B accounting rules, rebate model complexity, or FQHC chart of accounts conventions. A generic integration misses all the financial logic — duplicate discount detection, rebate accrual state management, exception handling — that makes the connector actually useful. Finance teams can't buy a plumbing tool; they need a solution.</div>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-name">340B Software Platforms — Verity, Sentry</div>
+        <h3>The Compliance Tools</h3>
+        <p>Purpose-built 340B compliance and analytics platforms. Some overlap in data visualization and reporting.</p>
+        <div class="comp-weakness"><strong>Weakness:</strong> Focus is on program compliance and audit defense, not GL posting. These tools stop at dashboards and reports — they don't write journal entries or manage ERP integration. They are a complement to the connector, not a substitute.</div>
+      </div>
+    </div>
+
+    <div class="comp-card opportunity" style="margin-top: 14px;">
+      <div class="comp-name">Your Firm's Position — An Uncontested White Space</div>
+      <h3>Four Reasons No One Has Built This Yet — and Why a CPA Firm Should</h3>
+      <div class="moat-grid">
+        <div class="moat-item">
+          <strong>Too Narrow for Big Vendors</strong>
+          <p>1,400 FQHCs is not a market that Sage or Oracle builds for. The niche is large enough for a profitable product business but too small for enterprise software roadmaps.</p>
+        </div>
+        <div class="moat-item">
+          <strong>Requires Dual Expertise</strong>
+          <p>Building this correctly requires both 340B program knowledge and ERP accounting expertise. That combination lives in a CPA firm — not a TPA, not a tech vendor.</p>
+        </div>
+        <div class="moat-item">
+          <strong>Trusted Distribution</strong>
+          <p>FQHCs are relationship-driven buyers. A CPA firm with existing healthcare nonprofit clients can walk in with instant credibility that no startup can manufacture.</p>
+        </div>
+        <div class="moat-item">
+          <strong>Rebate Model Timing</strong>
+          <p>The connector that handles rebate-model complexity didn't need to exist two years ago. It needs to exist now. Being first to market with this capability is durable positioning.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 INPUTS -->
+<section id="inputs">
+  <div class="container">
+    <div class="section-label">09 — Required Inputs</div>
+    <h2>What It Takes to Build This</h2>
+    <p>The connector is a software product, so the primary investment is engineering — but it is modest relative to the revenue potential because the integration surface is narrow and well-defined. The key constraint is finding engineers who understand both ERP APIs and healthcare data formats, which is rare but not impossible.</p>
+
+    <div class="inputs-grid">
+      <div class="input-section">
+        <h3>Human Capital</h3>
+        <div class="input-item">
+          <div class="input-cost">Yr 1</div>
+          <div>
+            <h4>Lead Software Engineer / Integration Architect</h4>
+            <p>Builds the core connector: TPA API/export parsing, GL mapping engine, Intacct and NetSuite API integration. Must understand EDI and REST APIs. $140K–$185K or contract equiv.</p>
+          </div>
+        </div>
+        <div class="input-item">
+          <div class="input-cost">Yr 1</div>
+          <div>
+            <h4>340B Subject Matter Expert</h4>
+            <p>Translates program rules into product requirements. Understands TPA data schemas, wholesaler invoice formats, duplicate discount logic, and the rebate model mechanics. Can be a consultant or fractional hire. $80K–$130K.</p>
+          </div>
+        </div>
+        <div class="input-item">
+          <div class="input-cost">Yr 1</div>
+          <div>
+            <h4>Product Manager / Practice Lead</h4>
+            <p>Owns the product roadmap, drives client onboarding, and bridges the gap between engineering and the FQHC finance buyer. Ideally has FQHC or nonprofit health system finance background. $110K–$150K.</p>
+          </div>
+        </div>
+        <div class="input-item">
+          <div class="input-cost">Yr 2+</div>
+          <div>
+            <h4>Customer Success / Implementation Specialist</h4>
+            <p>Manages client onboarding, chart of accounts mapping, and ongoing support. Can be sourced from existing firm healthcare staff. $65K–$95K.</p>
+          </div>
+        </div>
+        <div class="input-item">
+          <div class="input-cost">Yr 2+</div>
+          <div>
+            <h4>Second Engineer</h4>
+            <p>As client count grows and new TPA integrations are needed, a second engineer handles feature development and integration maintenance. $120K–$165K.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-section">
+        <h3>Technology & Infrastructure</h3>
+        <div class="input-item">
+          <div class="input-cost">$20K–$40K</div>
+          <div>
+            <h4>Cloud Infrastructure</h4>
+            <p>Multi-tenant SaaS hosting on AWS or Azure. Relatively lightweight — the connector processes structured data files, not large analytical workloads. HIPAA-compliant environment required.</p>
+          </div>
+        </div>
+        <div class="input-item">
+          <div class="input-cost">$15K–$25K</div>
+          <div>
+            <h4>TPA Integration Access</h4>
+            <p>Data sharing agreements with Macro Helix, Aventi, and CaptureRx. Some provide API sandbox access; others require formal partner agreements. Legal and onboarding time is the primary cost.</p>
+          </div>
+        </div>
+        <div class="input-item">
+          <div class="input-cost">$8K–$15K</div>
+          <div>
+            <h4>ERP Developer Accounts</h4>
+            <p>Sage Intacct and NetSuite developer sandbox subscriptions, API documentation access, and marketplace partner enrollment for eventual Intacct App Marketplace listing.</p>
+          </div>
+        </div>
+        <div class="input-item">
+          <div class="input-cost">$10K–$20K</div>
+          <div>
+            <h4>Security & Compliance</h4>
+            <p>HIPAA BAA with cloud provider, SOC 2 Type I readiness (required for enterprise healthcare clients), penetration testing, and data encryption implementation.</p>
+          </div>
+        </div>
+        <div class="input-item">
+          <div class="input-cost">~$15K</div>
+          <div>
+            <h4>Go-to-Market</h4>
+            <p>NACHC conference presence, state PCA partnership outreach, product collateral, and initial customer acquisition (co-marketing with a state PCA is the most capital-efficient channel).</p>
+          </div>
+        </div>
+
+        <div class="total-box">
+          <div>
+            <div class="t-label">Estimated Year-1 Investment</div>
+            <div class="t-sub">Labor + Infrastructure + Compliance + GTM</div>
+          </div>
+          <div class="t-value">$500K–$750K</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 TIMELINE -->
+<section id="timeline">
+  <div class="container">
+    <div class="section-label">10 — Rollout Timeline</div>
+    <h2>Build Narrow, Then Expand</h2>
+    <p>The recommended approach is to build an extremely focused v1.0 — one TPA (Macro Helix, the largest), one GL (Sage Intacct, dominant in FQHCs), discount model only — and put it in front of 2–3 existing clients before building anything else. The connectors that fail do so because they try to support every TPA and every ERP before they've validated the core workflow. Build narrow, validate fast, then expand.</p>
+
+    <div class="timeline">
+      <div class="timeline-item ph-active">
+        <div class="tl-dot">Q1–Q2</div>
+        <div class="tl-content">
+          <div class="tl-period">Months 1–6 — Build v1.0</div>
+          <h3>One TPA, One GL, One Workflow</h3>
+          <p>Hire lead engineer and 340B SME. Establish Macro Helix data sharing agreement. Build core parsing and mapping engine targeting Sage Intacct journal entry API. Develop chart of accounts mapping UI. Implement basic duplicate discount detection logic. Deploy with 2–3 existing FQHC clients at no cost or minimal fee for design partner validation. Incorporate feedback aggressively.</p>
+          <div class="kpi-row">
+            <span class="kpi-chip">Macro Helix Integration Live</span>
+            <span class="kpi-chip">Intacct API Integration Done</span>
+            <span class="kpi-chip">3 Design Partner Clients</span>
+            <span class="kpi-chip">Core Workflow Validated</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item ph-active">
+        <div class="tl-dot">Q3–Q4</div>
+        <div class="tl-content">
+          <div class="tl-period">Months 7–12 — First Paying Clients</div>
+          <h3>Expand to NetSuite, Add Rebate Logic, Begin Selling</h3>
+          <p>Add NetSuite GL integration. Begin rebate model support (receivables tracking, accrual state management). Convert design partners to paid contracts. Hire customer success specialist. Launch NACHC conference presence. Target 10–15 paying clients by year-end. Apply to Sage Intacct App Marketplace. Establish first state PCA partnership for co-marketing.</p>
+          <div class="kpi-row">
+            <span class="kpi-chip">NetSuite Integration Live</span>
+            <span class="kpi-chip">Rebate Model v1 Complete</span>
+            <span class="kpi-chip">10–15 Paying Clients</span>
+            <span class="kpi-chip">$150K–$300K ARR</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item ph-future">
+        <div class="tl-dot">Year 2</div>
+        <div class="tl-content">
+          <div class="tl-period">Year 2 — Scale the Customer Base</div>
+          <h3>Multi-TPA Support, PCA Partnerships, ARR Growth</h3>
+          <p>Add Aventi and CaptureRx integrations. Launch 340B ESP compliance layer. Establish 3–5 state PCA co-marketing partnerships. Achieve Sage Intacct App Marketplace listing (major distribution lever). Hire second engineer. Target 60–80 paying clients across all tiers. Publish annual 340B Reconciliation Benchmark study as thought leadership and lead generation. Begin DSH hospital segment outreach.</p>
+          <div class="kpi-row">
+            <span class="kpi-chip">3 TPA Integrations</span>
+            <span class="kpi-chip">Intacct Marketplace Live</span>
+            <span class="kpi-chip">60–80 Clients</span>
+            <span class="kpi-chip">$1.2M–$1.8M ARR</span>
+            <span class="kpi-chip">5 PCA Partnerships</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item ph-future">
+        <div class="tl-dot">Year 3+</div>
+        <div class="tl-content">
+          <div class="tl-period">Year 3 — Category Leadership</div>
+          <h3>The Recognized Standard for 340B-to-GL Reconciliation</h3>
+          <p>With 150+ clients, Marketplace distribution, and PCA co-marketing in place, the connector becomes the default solution referenced in HRSA guidance, PCA training materials, and NACHC conference presentations. Cross-sell into audit, compliance, and advisory is well-established and generating meaningful revenue. Net Revenue Retention exceeds 105% as clients upgrade tiers and add modules. Total ARR target $3–5M with 65%+ contribution margins.</p>
+          <div class="kpi-row">
+            <span class="kpi-chip">150+ Clients</span>
+            <span class="kpi-chip">$3M–$5M ARR</span>
+            <span class="kpi-chip">65%+ Margins</span>
+            <span class="kpi-chip">NRR 105%+</span>
+            <span class="kpi-chip">Category Leadership</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 VERDICT -->
+<section id="verdict" class="verdict-section">
+  <div class="container">
+    <div class="section-label">11 — The Verdict</div>
+    <h2>A Product the Market Is Waiting For,<br>From a Firm It Will Actually Trust</h2>
+    <p>What makes the 340B Reconciliation Connector exceptional as a CPA firm product initiative is the combination of factors that almost never align: a universally felt pain, a captive and enumerable market, no credible incumbent, a regulatory tailwind that's making the pain acuter, and a distribution advantage — existing client trust — that a startup simply cannot replicate. The investment is the most modest of the three practice opportunities presented in this series, the product is the most focused, and the go-to-market is the most direct. This is a product worth building.</p>
+
+    <div class="verdict-boxes">
+      <div class="verdict-box">
+        <div class="v-num">$3–5M</div>
+        <h4>ARR by Year 3</h4>
+        <p>At 65%+ contribution margins, on a product that costs ~$600K to build. The economics of narrow SaaS are exceptional when the market is captive and the pain is universal.</p>
+      </div>
+      <div class="verdict-box">
+        <div class="v-num">Sticky</div>
+        <h4>Built-In Retention</h4>
+        <p>A connector that handles monthly journal entry posting becomes embedded in the finance team's close process. Churn from a workflow tool this deeply integrated is exceptionally low — even in a budget-constrained nonprofit market.</p>
+      </div>
+      <div class="verdict-box">
+        <div class="v-num">Now</div>
+        <h4>The Rebate Window</h4>
+        <p>The connector that handles rebate-model complexity is a product that didn't need to exist two years ago and urgently needs to exist today. Building now means being the established solution before any competitor decides this niche is worth entering.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>CONFIDENTIAL — INTERNAL PRACTICE DEVELOPMENT REVIEW</span>
+  <span>Strategic Advisory Group · 2026</span>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.06 });
+  sections.forEach(s => observer.observe(s));
+
+  const navLinks = document.querySelectorAll('.section-nav a');
+  const sectionEls = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sectionEls.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(a => {
+      const active = a.getAttribute('href') === '#' + current;
+      a.style.color = active ? 'var(--forest)' : '';
+      a.style.borderBottomColor = active ? 'var(--forest)' : 'transparent';
+    });
+  });
+</script>
+</body>
+</html>
