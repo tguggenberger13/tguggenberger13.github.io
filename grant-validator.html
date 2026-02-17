@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grant Compliance Validator — Strategic Product Opportunity Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:        #0c1a2e;
+    --paper:      #f3f5f8;
+    --white:      #ffffff;
+    --cream:      #edf0f5;
+    --forest:     #1a5c4a;
+    --forest-lt:  #27856a;
+    --forest-pale:#ddf0ea;
+    --navy:       #0f2d5c;
+    --navy-lt:    #1e4d8c;
+    --amber:      #c87c0a;
+    --amber-lt:   #e8960e;
+    --amber-pale: #fef3e0;
+    --rule:       #c4cdd8;
+    --slate:      #3d5068;
+    --slate-lt:   #6a7f94;
+    --mid:        #384858;
+    --red:        #b83030;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER RULE ── */
+  .header-rule {
+    height: 5px;
+    background: linear-gradient(90deg, var(--navy) 0%, var(--forest) 50%, var(--forest-lt) 100%);
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 90% at 90% 40%, rgba(26,92,74,0.2) 0%, transparent 65%),
+      radial-gradient(ellipse 35% 50% at 5% 90%, rgba(15,45,92,0.3) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(39,133,106,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(39,133,106,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 62px 48px 54px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 28px;
+    align-items: end;
+    position: relative;
+    z-index: 1;
+  }
+
+  .header-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--forest-lt);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .header-eyebrow::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--forest-lt);
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(32px, 4.4vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--white);
+    max-width: 700px;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--forest-lt);
+  }
+
+  .header-meta {
+    text-align: right;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--slate-lt);
+    letter-spacing: 0.07em;
+    line-height: 2.1;
+  }
+
+  .header-subtitle {
+    grid-column: 1 / -1;
+    font-size: 15.5px;
+    color: #8a9db0;
+    max-width: 680px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 22px;
+    margin-top: 6px;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  .section-nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--rule);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(12,26,46,0.07);
+  }
+
+  .section-nav ul {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+    list-style: none;
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .section-nav li a {
+    display: block;
+    padding: 13px 17px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--slate);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .section-nav li a:hover { color: var(--forest); border-bottom-color: var(--forest); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+  section {
+    padding: 68px 0;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+  }
+
+  section.visible { opacity: 1; transform: translateY(0); }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--forest);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--rule); max-width: 72px; }
+
+  h2 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(26px, 3.2vw, 38px);
+    font-weight: 700;
+    line-height: 1.28;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+
+  p {
+    font-size: 15.5px;
+    color: var(--mid);
+    line-height: 1.72;
+    margin-bottom: 22px;
+  }
+
+  /* ── PROBLEM BOXES ── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 22px;
+    margin-top: 38px;
+  }
+
+  .problem-box {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 28px 26px;
+    position: relative;
+  }
+
+  .problem-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--amber) 0%, var(--amber-lt) 100%);
+    border-radius: 4px 4px 0 0;
+  }
+
+  .problem-box h3 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .problem-box p {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--slate);
+    margin: 0;
+  }
+
+  /* ── SOLUTION FLOW ── */
+  .solution-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    margin-top: 38px;
+  }
+
+  .flow-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 24px 22px;
+    position: relative;
+  }
+
+  .flow-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--forest);
+    letter-spacing: 0.12em;
+    margin-bottom: 10px;
+  }
+
+  .flow-card h4 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+
+  .flow-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--slate);
+    margin: 0;
+  }
+
+  /* ── TECH STACK ── */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+    margin-top: 32px;
+  }
+
+  .tech-item {
+    background: var(--white);
+    border-left: 3px solid var(--navy);
+    padding: 20px 22px;
+    box-shadow: 0 1px 4px rgba(12,26,46,0.06);
+  }
+
+  .tech-item h4 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--navy);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+
+  .tech-item p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--slate);
+    margin: 0;
+  }
+
+  /* ── METRICS ── */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 36px;
+  }
+
+  .metric-card {
+    background: var(--forest-pale);
+    border: 1px solid rgba(26,92,74,0.2);
+    border-radius: 4px;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .metric-num {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--forest);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .metric-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--slate);
+  }
+
+  .metric-desc {
+    font-size: 13.5px;
+    color: var(--mid);
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+
+  /* ── VERDICT ── */
+  .verdict-section {
+    background: linear-gradient(135deg, var(--ink) 0%, #14263f 100%);
+    color: var(--white);
+    border-bottom: none;
+  }
+
+  .verdict-section h2 { color: var(--white); }
+  .verdict-section p { color: #bcc9d8; }
+
+  .verdict-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 42px;
+  }
+
+  .verdict-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 4px;
+    padding: 28px 26px;
+  }
+
+  .v-num {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--forest-lt);
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+
+  .verdict-box h4 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .verdict-box p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #a0b5c8;
+    margin: 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 28px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--slate-lt);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .header-inner { grid-template-columns: 1fr; }
+    .header-meta { text-align: left; margin-top: 12px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header-rule"></div>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-eyebrow">Product Opportunity Brief</div>
+      <h1>Grant Compliance Validator:<br><em>Real-Time Allowability Checks for Federal Grants</em></h1>
+    </div>
+    <div class="header-meta">
+      CONFIDENTIAL<br>
+      INTERNAL REVIEW<br>
+      FEB 2026
+    </div>
+    <div class="header-subtitle">
+      A lightweight SaaS tool that validates federal grant expenses at point of entry — flagging unallowable costs, enforcing allocation caps, and preventing audit findings before they happen. Built for FQHCs and nonprofit health systems managing complex federal funding compliance.
+    </div>
+  </div>
+</header>
+
+<nav class="section-nav">
+  <ul>
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#market">Market</a></li>
+    <li><a href="#tech">Tech Stack</a></li>
+    <li><a href="#economics">Economics</a></li>
+    <li><a href="#inputs">Inputs & Rollout</a></li>
+    <li><a href="#verdict">Verdict</a></li>
+  </ul>
+</nav>
+
+<!-- 1 PROBLEM -->
+<section id="problem">
+  <div class="container">
+    <div class="section-label">1 — The Problem</div>
+    <h2>Every Grant Expense Is a Compliance Judgment<br>That Almost Nobody Is Checking</h2>
+    <p>When an AP clerk at an FQHC codes an invoice to a federal grant, they're making an implicit compliance decision: "This cost is allowable under 2 CFR 200 and our grant terms." In reality, most organizations aren't checking this until month-end review — or worse, during the annual Single Audit. By then, questioned costs, repayments, and audit findings are already baked in. The knowledge exists (2 CFR 200 Subpart E is publicly available), but nobody checks it at the point of transaction.</p>
+
+    <div class="problem-grid">
+      <div class="problem-box">
+        <h3>Manual Policy Lookups</h3>
+        <p>Finance staff don't memorize 55+ cost categories in 2 CFR 200. They rely on experience, ask colleagues, or hope for the best. The result: unallowable costs slip through routinely.</p>
+      </div>
+      <div class="problem-box">
+        <h3>No Real-Time Validation</h3>
+        <p>ERPs don't enforce grant compliance rules. A $500 entertainment expense coded to HRSA posts immediately, even though it's explicitly unallowable. The error surfaces months later during audit prep.</p>
+      </div>
+      <div class="problem-box">
+        <h3>Allocation Cap Overruns</h3>
+        <p>Indirect cost rate caps (e.g., 15% of direct costs) are tracked manually in spreadsheets. By the time finance realizes they've exceeded the cap, correcting entries are painful and visible to auditors.</p>
+      </div>
+      <div class="problem-box">
+        <h3>Audit Findings Are Costly</h3>
+        <p>Questioned costs trigger repayments, corrective action plans, and reputational damage. A single finding can jeopardize future funding. Prevention is worth 10x remediation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 SOLUTION -->
+<section id="solution">
+  <div class="container">
+    <div class="section-label">2 — The Solution</div>
+    <h2>A Validator, Not a Gatekeeper</h2>
+    <p>The Grant Compliance Validator runs in the background — checking every transaction coded to a federal grant against 2 CFR 200 rules and grant-specific terms. It doesn't block staff from entering data; instead, it flags issues in a leadership dashboard where they can be reviewed and corrected before month-end. Think of it as spell-check for grant compliance: non-intrusive, always running, and impossible to ignore once it's caught a mistake.</p>
+
+    <div class="solution-flow">
+      <div class="flow-card">
+        <div class="flow-num">STEP 1</div>
+        <h4>Transactions Post Normally</h4>
+        <p>AP staff enter bills and journal entries in NetSuite or Intacct with zero interruption. The validator observes silently.</p>
+      </div>
+      <div class="flow-card">
+        <div class="flow-num">STEP 2</div>
+        <h4>Validator Runs Nightly</h4>
+        <p>All transactions coded to federal grants are checked against the rules engine: allowable categories, allocation caps, documentation requirements.</p>
+      </div>
+      <div class="flow-card">
+        <div class="flow-num">STEP 3</div>
+        <h4>Issues Surface in Dashboard</h4>
+        <p>CFO or grants manager sees flagged items: high-priority violations, missing docs, or warnings. Each includes the specific regulation reference and suggested action.</p>
+      </div>
+      <div class="flow-card">
+        <div class="flow-num">STEP 4</div>
+        <h4>Corrections Happen Pre-Audit</h4>
+        <p>Leadership recodes entries, attaches documentation, or marks exceptions — all before the auditor sees anything. Full audit trail is preserved.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 MARKET -->
+<section id="market">
+  <div class="container">
+    <div class="section-label">3 — Market & TAM</div>
+    <h2>A Captive, Enumerable Market</h2>
+    <p>The total addressable market is narrow by design: federally funded health centers and nonprofit health systems managing 2 CFR 200 compliance. These organizations are easy to identify, geographically distributed, and universally subject to annual Single Audits. Unlike a horizontal SaaS play, this is a vertical product for a known, enumerable customer base.</p>
+
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="metric-num">~1,400</div>
+        <div class="metric-label">FQHCs in the U.S.</div>
+        <div class="metric-desc">Almost all managing 3–10 concurrent federal grants (HRSA, SAMHSA, CDC, etc.)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">$500/mo</div>
+        <div class="metric-label">Target ARPU</div>
+        <div class="metric-desc">Tier 2 pricing for 4–10 grants, ERP integration, pre-audit reporting</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">100 clients</div>
+        <div class="metric-label">Year 2 Target</div>
+        <div class="metric-desc">= $600K ARR at modest penetration, expanding from design partners</div>
+      </div>
+    </div>
+
+    <p style="margin-top: 32px;">Distribution advantages: existing CPA firm relationships with FQHCs, co-marketing with state Primary Care Associations (PCAs), and referrals from Single Audit teams who see the same compliance gaps year after year. This is a product that auditors will actively recommend to their clients.</p>
+  </div>
+</section>
+
+<!-- 4 TECH STACK -->
+<section id="tech">
+  <div class="container">
+    <div class="section-label">4 — Technology</div>
+    <h2>Lightweight, Deterministic, Low-Maintenance</h2>
+    <p>The validator is not AI-powered or algorithmically complex — it's a rules engine with structured lookups. The 2 CFR 200 regulation changes infrequently (last major update: 2024), and grant-specific terms are uploaded by customers during onboarding. Once the core engine is built, maintenance is minimal.</p>
+
+    <div class="tech-grid">
+      <div class="tech-item">
+        <h4>BACKEND API</h4>
+        <p>Modern server-side framework with relational database for rules storage, audit logs, and customer configuration. Scheduled job processing for nightly validation sweeps.</p>
+      </div>
+      <div class="tech-item">
+        <h4>RULES ENGINE</h4>
+        <p>Deterministic logic engine with structured rule definitions — simple if/then validation, no ML required. Rules update infrequently as regulations change.</p>
+      </div>
+      <div class="tech-item">
+        <h4>ERP INTEGRATION</h4>
+        <p>API connections to Sage Intacct and NetSuite for reading GL transactions and posting corrective journal entries. OAuth-based authentication.</p>
+      </div>
+      <div class="tech-item">
+        <h4>DASHBOARD FRONTEND</h4>
+        <p>Modern web framework with component library for clean, responsive UI. Charts and visualization for compliance scoring and trend analysis.</p>
+      </div>
+      <div class="tech-item">
+        <h4>BROWSER EXTENSION (OPTIONAL)</h4>
+        <p>Lightweight JavaScript extension for real-time hints as staff enter data — non-blocking, educational UI overlay.</p>
+      </div>
+      <div class="tech-item">
+        <h4>INFRASTRUCTURE</h4>
+        <p>Cloud hosting with managed database, error monitoring, and uptime tracking. Standard SaaS stack with emphasis on reliability over complexity.</p>
+      </div>
+    </div>
+
+    <p style="margin-top: 28px; font-size: 14px; color: var(--slate);">Build estimate: 8–12 weeks for MVP with one full-stack engineer. The product is focused enough that a small, experienced team can ship v1.0 quickly and iterate based on design partner feedback.</p>
+  </div>
+</section>
+
+<!-- 5 ECONOMICS -->
+<section id="economics">
+  <div class="container">
+    <div class="section-label">5 — Unit Economics</div>
+    <h2>Narrow SaaS with Strong Margins</h2>
+    <p>The economics of a vertical compliance tool are exceptional when the market is captive and the pain is universal. Once a finance team avoids a single questioned cost (often $10K–$50K in repayments and remediation), the product has paid for itself multiple times over. Retention is high because switching cost is psychological — teams don't turn off tools that prevent audit findings.</p>
+
+    <div class="metrics-row">
+      <div class="metric-card">
+        <div class="metric-num">$200–$1,200</div>
+        <div class="metric-label">Monthly Pricing Tiers</div>
+        <div class="metric-desc">Tier 1: 1–3 grants. Tier 2: 4–10 grants. Tier 3: 10+ grants, API access, multi-entity support.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">60–70%</div>
+        <div class="metric-label">Contribution Margin</div>
+        <div class="metric-desc">Low infrastructure cost (data processing is lightweight), minimal ongoing dev after initial build.</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">$400K–$600K</div>
+        <div class="metric-label">Year 1 Investment</div>
+        <div class="metric-desc">1 engineer, 1 PM/practice lead, cloud infra, compliance (SOC 2 Type I), initial GTM via PCA partnerships.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5B INPUTS & ROLLOUT -->
+<section id="inputs">
+  <div class="container">
+    <div class="section-label">5B — Inputs & Rollout</div>
+    <h2>A Lean Build, Conservative Ramp</h2>
+    <p>The product requires minimal headcount to build and can scale efficiently once validated. The recommended approach is to start with a single full-stack engineer and a practice lead, prove the concept with 2–3 design partners, then expand the team only as client count and feature demands justify it.</p>
+
+    <div style="background: var(--white); border: 1px solid var(--rule); border-radius: 4px; padding: 32px; margin-top: 32px;">
+      <div style="display: grid; gap: 28px;">
+        
+        <!-- Year 1 -->
+        <div style="border-left: 3px solid var(--forest); padding-left: 24px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--forest); letter-spacing: 0.12em; margin-bottom: 8px;">YEAR 1 — BUILD & VALIDATE</div>
+          <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 19px; font-weight: 500; color: var(--ink); margin-bottom: 16px;">Core Team: 2 FTEs</h3>
+          
+          <div style="display: grid; gap: 16px; margin-bottom: 18px;">
+            <div style="display: flex; gap: 16px; align-items: start;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--navy); min-width: 90px; padding-top: 2px;">$140K–$185K</div>
+              <div>
+                <div style="font-weight: 500; color: var(--ink); margin-bottom: 4px;">Full-Stack Engineer</div>
+                <div style="font-size: 14px; color: var(--slate); line-height: 1.6;">Builds MVP (rules engine, ERP integrations, dashboard), maintains infrastructure, iterates based on design partner feedback.</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: start;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--navy); min-width: 90px; padding-top: 2px;">$110K–$150K</div>
+              <div>
+                <div style="font-weight: 500; color: var(--ink); margin-bottom: 4px;">Product Manager / Practice Lead</div>
+                <div style="font-size: 14px; color: var(--slate); line-height: 1.6;">Owns roadmap, drives design partner onboarding, bridges engineering and FQHC finance buyers. Ideally has FQHC or nonprofit health system background.</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid var(--rule); padding-top: 16px; margin-top: 18px;">
+            <div style="font-size: 13px; color: var(--slate); margin-bottom: 10px;"><strong>Additional Year 1 Costs:</strong></div>
+            <div style="font-size: 14px; color: var(--slate); line-height: 1.7;">
+              • Cloud infrastructure & database hosting: $15K–$25K<br>
+              • ERP developer accounts (Intacct, NetSuite sandboxes): $8K–$12K<br>
+              • SOC 2 Type I readiness & security audit: $10K–$20K<br>
+              • Initial GTM (PCA outreach, NACHC presence, collateral): $10K–$15K
+            </div>
+          </div>
+
+          <div style="background: var(--forest-pale); border-radius: 4px; padding: 16px 20px; margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 13px; color: var(--slate);">Estimated Year 1 Total Investment</div>
+            <div style="font-family: 'Libre Baskerville', serif; font-size: 26px; font-weight: 700; color: var(--forest);">$400K–$600K</div>
+          </div>
+        </div>
+
+        <!-- Year 2 -->
+        <div style="border-left: 3px solid var(--navy); padding-left: 24px;">
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--navy); letter-spacing: 0.12em; margin-bottom: 8px;">YEAR 2 — SCALE & SUPPORT</div>
+          <h3 style="font-family: 'IBM Plex Sans', sans-serif; font-size: 19px; font-weight: 500; color: var(--ink); margin-bottom: 16px;">Expand Team as Client Count Grows</h3>
+          
+          <div style="display: grid; gap: 16px;">
+            <div style="display: flex; gap: 16px; align-items: start;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--navy); min-width: 90px; padding-top: 2px;">$65K–$95K</div>
+              <div>
+                <div style="font-weight: 500; color: var(--ink); margin-bottom: 4px;">Customer Success / Implementation Specialist</div>
+                <div style="font-size: 14px; color: var(--slate); line-height: 1.6;">Manages client onboarding, chart of accounts mapping, ongoing support. Can be sourced from existing firm healthcare consulting staff.</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 16px; align-items: start;">
+              <div style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--navy); min-width: 90px; padding-top: 2px;">Q3/Q4 (opt.)</div>
+              <div>
+                <div style="font-weight: 500; color: var(--ink); margin-bottom: 4px;">Second Engineer (If Scaling Quickly)</div>
+                <div style="font-size: 14px; color: var(--slate); line-height: 1.6;">Handles feature development, additional ERP integrations (D365, etc.), and maintenance as client base expands beyond 50. Hire only when velocity demands it.</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: var(--amber-pale); border-radius: 4px; padding: 14px 18px; margin-top: 18px; font-size: 13px; color: var(--mid); line-height: 1.6;">
+            <strong>Revenue Target by End of Year 2:</strong> 80–100 clients at $500/mo avg = $480K–$600K ARR
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 VERDICT -->
+<section id="verdict" class="verdict-section">
+  <div class="container">
+    <div class="section-label">7 — The Verdict</div>
+    <h2>A Product That Sells Itself<br>Once You've Demonstrated It Works</h2>
+    <p>The Grant Compliance Validator is the kind of product that converts immediately after a demo — because every CFO managing federal grants has experienced the pain of a questioned cost. The distribution advantage is existing client trust, the retention driver is embedded workflow, and the competitive moat is being first to a niche no major vendor is targeting. This is a product worth building.</p>
+
+    <div class="verdict-boxes">
+      <div class="verdict-box">
+        <div class="v-num">$600K+</div>
+        <h4>ARR by Year 2</h4>
+        <p>100 clients at $500/mo average. Modest market penetration, strong unit economics, path to $3M+ ARR by Year 3 as PCA partnerships scale.</p>
+      </div>
+      <div class="verdict-box">
+        <div class="v-num">Sticky</div>
+        <h4>Embedded Retention</h4>
+        <p>Once a finance team has avoided audit findings using the validator, they will never turn it off. The psychological switching cost is enormous.</p>
+      </div>
+      <div class="verdict-box">
+        <div class="v-num">Now</div>
+        <h4>No Incumbent</h4>
+        <p>No credible competitor exists. ERPs don't solve this. Compliance consultants charge hourly. A productized solution from a trusted CPA firm is the obvious answer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>CONFIDENTIAL — INTERNAL PRACTICE DEVELOPMENT REVIEW</span>
+  <span>Strategic Advisory Group · 2026</span>
+</footer>
+
+<script>
+  const sections = document.querySelectorAll('section');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.06 });
+  sections.forEach(s => observer.observe(s));
+
+  const navLinks = document.querySelectorAll('.section-nav a');
+  const sectionEls = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sectionEls.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(a => {
+      const active = a.getAttribute('href') === '#' + current;
+      a.style.color = active ? 'var(--forest)' : '';
+      a.style.borderBottomColor = active ? 'var(--forest)' : 'transparent';
+    });
+  });
+</script>
+</body>
+</html>
